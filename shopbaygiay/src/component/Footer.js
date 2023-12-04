@@ -36,36 +36,23 @@ export function Footer(){
                             </div>
                             <div className="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                                 <div className="wrapper">
-                                    <h2> THỜI GIAN MỞ CỬA</h2>
+                                    <h2>Những hãng giày từ shop</h2>
                                     <div className="content">
                                         <ul className="d-flex se">
                                             <li>
-                                                <a>Thứ 2</a>
-                                                <span>7 AM &nbsp;-&nbsp; 10 PM</span>
+                                                <a>Nike</a>
                                             </li>
                                             <li>
-                                                <a>Thứ 3</a>
-                                                <span>7 AM &nbsp;-&nbsp; 10 PM</span>
+                                                <a>Vans</a>
                                             </li>
                                             <li>
-                                                <a>Thứ 4</a>
-                                                <span>7 AM &nbsp;-&nbsp; 10 PM</span>
+                                                <a>Jordan</a>
                                             </li>
                                             <li>
-                                                <a>Thứ 5</a>
-                                                <span>7 AM &nbsp;-&nbsp; 10 PM</span>
+                                                <a>Converse</a>
                                             </li>
                                             <li>
-                                                <a>Thứ 6</a>
-                                                <span>7 AM &nbsp;-&nbsp; 10 PM</span>
-                                            </li>
-                                            <li>
-                                                <a>Thứ 7</a>
-                                                <span>8 AM &nbsp;-&nbsp; 11 PM</span>
-                                            </li>
-                                            <li>
-                                                <a>Chủ nhật</a>
-                                                <span>8 AM &nbsp;-&nbsp; 10h30 PM</span>
+                                                <a>Adidas</a>
                                             </li>
                                         </ul>
                                     </div>

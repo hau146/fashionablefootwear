@@ -1,3 +1,5 @@
+import {Link} from "react-router-dom";
+
 export function Cart(){
     return(
         <div>
@@ -20,10 +22,10 @@ export function Cart(){
                                     <div className="row">
                                         <div className="col-lg-7">
                                             <h5 className="mb-3">
-                                                <a href="#!" className="text-body">
+                                                <Link className="text-body" to="/product">
                                                     <i className="fas fa-long-arrow-alt-left me-2" />
                                                     Tiếp tục mua sắm
-                                                </a>
+                                                </Link>
                                             </h5>
                                             <hr />
                                             <div className="d-flex justify-content-between align-items-center mb-4">
@@ -33,9 +35,9 @@ export function Cart(){
                                                 </div>
                                                 <div>
                                                     <p className="mb-0">
-                                                        <span className="text-muted">Sort by:</span>{" "}
+                                                        <span className="text-muted">Sắp xếp theo:</span>{" "}
                                                         <a href="#!" className="text-body">
-                                                            price <i className="fas fa-angle-down mt-1" />
+                                                            giá <i className="fas fa-angle-down mt-1" />
                                                         </a>
                                                     </p>
                                                 </div>
@@ -46,25 +48,33 @@ export function Cart(){
                                                         <div className="d-flex flex-row align-items-center">
                                                             <div>
                                                                 <img
-                                                                    src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img1.webp"
+                                                                    src="https://i.pinimg.com/564x/65/66/2f/65662f7588d98371923f970cab3f845e.jpg"
                                                                     className="img-fluid rounded-3"
                                                                     alt="Shopping item"
                                                                     style={{ width: 65 }}
                                                                 />
                                                             </div>
                                                             <div className="ms-3">
-                                                                <h5>Iphone 11 pro</h5>
-                                                                <p className="small mb-0">256GB, Navy Blue</p>
+                                                                <h5>ULTRA IV</h5>
+                                                                <p className="small mb-0">Hãng: Nike, Size: 40</p>
+                                                                <h6 className="mb-0">đ1.000.000</h6>
                                                             </div>
                                                         </div>
-                                                        <div className="d-flex flex-row align-items-center">
-                                                            <div style={{ width: 50 }}>
-                                                                <h5 className="fw-normal mb-0">2</h5>
+                                                        <div style={{justifyContent:"right"}} className="d-flex flex-row align-items-center">
+                                                            <div style={{ width: "44%" , display:"flex"}}>
+                                                                <button className="btn btn-link px-2"
+                                                                        onClick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                                                    <i style={{color:"black"}} className="fas fa-minus"></i>
+                                                                </button>
+                                                                <input style={{margin:"1% 0 0 0", maxWidth:"37%"}} id="form1" min="0" name="quantity" value="1"
+                                                                       type="number"
+                                                                       className="form-control form-control-sm"/>
+                                                                <button className="btn btn-link px-2"
+                                                                        onClick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                                                    <i style={{color:"black"}} className="fas fa-plus"></i>
+                                                                </button>
                                                             </div>
-                                                            <div style={{ width: 80 }}>
-                                                                <h5 className="mb-0">$900</h5>
-                                                            </div>
-                                                            <a href="#!" style={{ color: "#cecece" }}>
+                                                            <a href="#!" style={{ color: "red" }}>
                                                                 <i className="fas fa-trash-alt" />
                                                             </a>
                                                         </div>
@@ -77,25 +87,33 @@ export function Cart(){
                                                         <div className="d-flex flex-row align-items-center">
                                                             <div>
                                                                 <img
-                                                                    src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img2.webp"
+                                                                    src="https://i.pinimg.com/564x/48/98/7d/48987ddd7fe9dbf7512bfa7abba1d66a.jpg"
                                                                     className="img-fluid rounded-3"
                                                                     alt="Shopping item"
                                                                     style={{ width: 65 }}
                                                                 />
                                                             </div>
                                                             <div className="ms-3">
-                                                                <h5>Samsung galaxy Note 10 </h5>
-                                                                <p className="small mb-0">256GB, Navy Blue</p>
+                                                                <h5>ULTRA IV</h5>
+                                                                <p className="small mb-0">Hãng: Adidas, Size: 41</p>
+                                                                <h6 className="mb-0">đ2.500.000</h6>
                                                             </div>
                                                         </div>
-                                                        <div className="d-flex flex-row align-items-center">
-                                                            <div style={{ width: 50 }}>
-                                                                <h5 className="fw-normal mb-0">2</h5>
+                                                        <div style={{justifyContent:"right"}} className="d-flex flex-row align-items-center">
+                                                            <div style={{ width: "44%" , display:"flex"}}>
+                                                                <button className="btn btn-link px-2"
+                                                                        onClick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                                                    <i style={{color:"black"}} className="fas fa-minus"></i>
+                                                                </button>
+                                                                <input style={{margin:"1% 0 0 0", maxWidth:"37%"}} id="form1" min="0" name="quantity" value="1"
+                                                                       type="number"
+                                                                       className="form-control form-control-sm"/>
+                                                                <button className="btn btn-link px-2"
+                                                                        onClick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                                                    <i style={{color:"black"}} className="fas fa-plus"></i>
+                                                                </button>
                                                             </div>
-                                                            <div style={{ width: 80 }}>
-                                                                <h5 className="mb-0">$900</h5>
-                                                            </div>
-                                                            <a href="#!" style={{ color: "#cecece" }}>
+                                                            <a href="#!" style={{ color: "red" }}>
                                                                 <i className="fas fa-trash-alt" />
                                                             </a>
                                                         </div>
@@ -108,56 +126,72 @@ export function Cart(){
                                                         <div className="d-flex flex-row align-items-center">
                                                             <div>
                                                                 <img
-                                                                    src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img3.webp"
+                                                                    src="https://i.pinimg.com/564x/da/5f/8b/da5f8b4c4290c84a3a214914c54e874d.jpg"
                                                                     className="img-fluid rounded-3"
                                                                     alt="Shopping item"
                                                                     style={{ width: 65 }}
                                                                 />
                                                             </div>
                                                             <div className="ms-3">
-                                                                <h5>Canon EOS M50</h5>
-                                                                <p className="small mb-0">Onyx Black</p>
+                                                                <h5>ULTRA IV</h5>
+                                                                <p className="small mb-0">Hãng: Nike, Size: 40</p>
+                                                                <h6 className="mb-0">đ1.000.000</h6>
                                                             </div>
                                                         </div>
-                                                        <div className="d-flex flex-row align-items-center">
-                                                            <div style={{ width: 50 }}>
-                                                                <h5 className="fw-normal mb-0">1</h5>
+                                                        <div style={{justifyContent:"right"}} className="d-flex flex-row align-items-center">
+                                                            <div style={{ width: "44%" , display:"flex"}}>
+                                                                <button className="btn btn-link px-2"
+                                                                        onClick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                                                    <i style={{color:"black"}} className="fas fa-minus"></i>
+                                                                </button>
+                                                                <input style={{margin:"1% 0 0 0", maxWidth:"37%"}} id="form1" min="0" name="quantity" value="1"
+                                                                       type="number"
+                                                                       className="form-control form-control-sm"/>
+                                                                <button className="btn btn-link px-2"
+                                                                        onClick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                                                    <i style={{color:"black"}} className="fas fa-plus"></i>
+                                                                </button>
                                                             </div>
-                                                            <div style={{ width: 80 }}>
-                                                                <h5 className="mb-0">$1199</h5>
-                                                            </div>
-                                                            <a href="#!" style={{ color: "#cecece" }}>
+                                                            <a href="#!" style={{ color: "red" }}>
                                                                 <i className="fas fa-trash-alt" />
                                                             </a>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="card mb-3 mb-lg-0">
+                                            <div className="card mb-3">
                                                 <div className="card-body">
                                                     <div className="d-flex justify-content-between">
                                                         <div className="d-flex flex-row align-items-center">
                                                             <div>
                                                                 <img
-                                                                    src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img4.webp"
+                                                                    src="https://i.pinimg.com/564x/94/3e/32/943e3267e3b6b68bd15c8605d100c0c0.jpg"
                                                                     className="img-fluid rounded-3"
                                                                     alt="Shopping item"
                                                                     style={{ width: 65 }}
                                                                 />
                                                             </div>
                                                             <div className="ms-3">
-                                                                <h5>MacBook Pro</h5>
-                                                                <p className="small mb-0">1TB, Graphite</p>
+                                                                <h5>ULTRA IV</h5>
+                                                                <p className="small mb-0">Hãng: Nike, Size: 40</p>
+                                                                <h6 className="mb-0">đ3.000.000</h6>
                                                             </div>
                                                         </div>
-                                                        <div className="d-flex flex-row align-items-center">
-                                                            <div style={{ width: 50 }}>
-                                                                <h5 className="fw-normal mb-0">1</h5>
+                                                        <div style={{justifyContent:"right"}} className="d-flex flex-row align-items-center">
+                                                            <div style={{ width: "44%" , display:"flex"}}>
+                                                                <button className="btn btn-link px-2"
+                                                                        onClick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                                                    <i style={{color:"black"}} className="fas fa-minus"></i>
+                                                                </button>
+                                                                <input style={{margin:"1% 0 0 0", maxWidth:"37%"}} id="form1" min="0" name="quantity" value="1"
+                                                                       type="number"
+                                                                       className="form-control form-control-sm"/>
+                                                                <button className="btn btn-link px-2"
+                                                                        onClick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                                                    <i style={{color:"black"}} className="fas fa-plus"></i>
+                                                                </button>
                                                             </div>
-                                                            <div style={{ width: 80 }}>
-                                                                <h5 className="mb-0">$1799</h5>
-                                                            </div>
-                                                            <a href="#!" style={{ color: "#cecece" }}>
+                                                            <a href="#!" style={{ color: "red" }}>
                                                                 <i className="fas fa-trash-alt" />
                                                             </a>
                                                         </div>
@@ -206,33 +240,33 @@ export function Cart(){
                                                                 placeholder="Nhập mã giảm giá"
 
                                                             />
-                                                            <button type="button" className="btn btn-outline-warning btn-lg mb-4">Áp dụng</button>
+                                                            <button style={{padding: "0.5rem 0rem", lineHeight:"1.5"}} type="button" className="btn btn-secondary btn-lg mb-4">Áp dụng</button>
                                                         </div>
 
                                                     </form>
                                                     <hr className="my-4" />
                                                     <div className="d-flex justify-content-between">
                                                         <p className="mb-2">Tổng tiền hàng</p>
-                                                        <p className="mb-2">$4798.00</p>
+                                                        <p className="mb-2">đ7.500.000</p>
                                                     </div>
                                                     <div className="d-flex justify-content-between">
                                                         <p className="mb-2">Phí vận chuyển</p>
-                                                        <p className="mb-2">$20.00</p>
+                                                        <p className="mb-2">đ57.000</p>
                                                     </div>
                                                     <div className="d-flex justify-content-between">
                                                         <p className="mb-2">Tiền giảm giá</p>
-                                                        <p className="mb-2">$20.00</p>
+                                                        <p className="mb-2">đ370.000</p>
                                                     </div>
                                                     <div className="d-flex justify-content-between mb-4">
-                                                        <p className="mb-2">Tổng thanh toán</p>
-                                                        <p className="mb-2">$4818.00</p>
+                                                        <p  className="mb-2">Tổng thanh toán</p>
+                                                        <p  className="mb-2">đ7.556.630</p>
                                                     </div>
                                                     <button
                                                         type="button"
                                                         className="btn btn-info btn-block btn-lg"
                                                     >
                                                         <div className="d-flex margin-right">
-                                                            <span>
+                                                            <span style={{margin: "0 auto"}}>
                                                                 Tiến hành thanh toán
                                                             </span>
                                                         </div>

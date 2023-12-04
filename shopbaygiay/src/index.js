@@ -13,6 +13,8 @@ import {Footer} from "./component/Footer";
 import {AboutUs} from "./component/AboutUs";
 import {Product} from "./component/Product";
 import {Cart} from "./component/Cart";
+import {Voucher} from "./component/Voucher";
+import {DetailProduct} from "./component/DetailProduct";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -27,6 +29,8 @@ root.render(
               <Route path="/about" element={<AboutUs/>}></Route>
               <Route path="/product" element={<Product/>}></Route>
               <Route path="/cart" element={<Cart/>}></Route>
+              <Route path="/voucher" element={<Voucher/>}></Route>
+              <Route path="/detailProduct/:id" element={<DetailProduct/>}></Route>
           </Routes>
           <Footer/>
       </BrowserRouter>

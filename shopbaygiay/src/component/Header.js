@@ -30,8 +30,16 @@ export function Header(){
                                 <Link to="/contact">
                                     Liên hệ
                                 </Link>
-
-
+                            </li>
+                            <li>
+                                <Link to="/voucher">
+                                    Kho voucher
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/contact">
+                                    Đơn mua
+                                </Link>
                             </li>
                         </ul>
                     </div>

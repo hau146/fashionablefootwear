@@ -16,73 +16,67 @@ export function MainPage(){
                         className="carousel slide carousel-fade"
                         data-ride="carousel"
                     >
-                        <div className="carousel-inner">
-                            <div className="carousel-item active">
-                                <img
-                                    src="https://firebasestorage.googleapis.com/v0/b/sneaker-db938.appspot.com/o/image-sneaker%2Fbackgounrd-mainpage.jpg?alt=media&token=e8b259e8-36f7-4972-a435-108504110ebb"
-                                    className=""
-                                    alt="..."
-                                />
-                                <div className="wrapper">
-                                    <h6>Fashionable Footwear</h6>
-                                    <h1>Trải nghiệm những đôi giày tốt nhất!</h1>
-                                    <p>
-                                        Sẵn sàng cho mọi bước đi - Với giày từ shop chúng tôi!
-                                    </p>
-                                    <a href="#">Đặt hàng ngay bây giờ</a>
+                        <div
+                            id="carouselExampleControls"
+                            className="carousel slide"
+                            data-bs-ride="carousel"
+                        >
+                            <div className="carousel-inner">
+                                <div className="carousel-item active">
+                                    <img src="https://firebasestorage.googleapis.com/v0/b/sneaker-db938.appspot.com/o/image-sneaker%2Fbackgounrd-mainpage.jpg?alt=media&token=e8b259e8-36f7-4972-a435-108504110ebb" className="d-block w-100" alt="..." />
+                                    <div className="wrapper">
+                                        <h6>Fashionable Footwear</h6>
+                                        <h1>Trải nghiệm những đôi giày tốt nhất!</h1>
+                                        <p>
+                                            Sẵn sàng cho mọi bước đi - Với giày từ shop chúng tôi!
+                                        </p>
+                                        <a href="#">Đặt hàng ngay bây giờ</a>
+                                    </div>
+                                </div>
+                                <div className="carousel-item">
+                                    <img src="https://firebasestorage.googleapis.com/v0/b/sneaker-db938.appspot.com/o/image-sneaker%2Fbg-mainpage2.jpg?alt=media&token=646754d6-56d1-4778-ba90-5f3a5b652fee" className="d-block w-100" alt="..." />
+                                    <div className="wrapper">
+                                        <h6>Fashionable Footwear</h6>
+                                        <h1>Khám phá những đôi giày tuyệt đẹp!</h1>
+                                        <p>
+                                            Chọn Snaker - Chọn phong cách, chọn sự độc đáo.
+                                        </p>
+                                        <a href="#">Đặt hàng ngay bây giờ</a>
+                                    </div>
+                                </div>
+                                <div className="carousel-item">
+                                    <img src="https://firebasestorage.googleapis.com/v0/b/sneaker-db938.appspot.com/o/image-sneaker%2Fbg-mainPage3.jpg?alt=media&token=250215f8-446c-470e-9c33-fc306a759153" className="d-block w-100" alt="..." />
+                                    <div className="wrapper">
+                                        <h6>Fashionable Footwear</h6>
+                                        <h1>Nâng tầm outfit của bạn!</h1>
+                                        <p>
+                                            Giày Snaker - Điểm nhấn hoàn hảo cho phong cách cá nhân.
+                                        </p>
+                                        <a href="#">Đặt hàng ngay bây giờ</a>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="carousel-item">
-                                <img
-                                    src="https://i.pinimg.com/564x/9c/fc/a4/9cfca4041f5040796b6fa5880becaadc.jpg"
-                                    className=""
-                                    alt="..."
-                                />
-                                <div className="wrapper">
-                                    <h6>Exclusive Offer</h6>
-                                    <h1>We are here to provide the best service</h1>
-                                    <p>
-                                        It is a long established fact that a reader will be distracted
-                                        by the readable content of a page when looking at its layout.
-                                    </p>
-                                    <a href="#">Order Now</a>
-                                </div>
-                            </div>
-                            <div className="carousel-item">
-                                <img
-                                    src="https://i.pinimg.com/564x/de/5b/fa/de5bfa8652e393ea337a0e361bbccfea.jpg"
-                                    className=""
-                                    alt="..."
-                                />
-                                <div className="wrapper">
-                                    <h6>Exclusive Offer</h6>
-                                    <h1>We are here to provide the best service</h1>
-                                    <p>
-                                        It is a long established fact that a reader will be distracted
-                                        by the readable content of a page when looking at its layout.
-                                    </p>
-                                    <a href="#">Order Now</a>
-                                </div>
-                            </div>
+                            <button
+                                className="carousel-control-prev"
+                                type="button"
+                                data-bs-target="#carouselExampleControls"
+                                data-bs-slide="prev"
+                            >
+                                <span className="carousel-control-prev-icon" aria-hidden="true" />
+                                <span className="visually-hidden">Previous</span>
+                            </button>
+                            <button
+                                className="carousel-control-next"
+                                type="button"
+                                data-bs-target="#carouselExampleControls"
+                                data-bs-slide="next"
+                            >
+                                <span className="carousel-control-next-icon" aria-hidden="true" />
+                                <span className="visually-hidden">Next</span>
+                            </button>
                         </div>
-                        <a
-                            className="carousel-control-prev"
-                            href="#carouselExampleFade"
-                            role="button"
-                            data-slide="prev"
-                        >
-                            <span className="carousel-control-prev-icon" aria-hidden="true" />
-                            {/*<span className="sr-only">Previous</span>*/}
-                        </a>
-                        <a
-                            className="carousel-control-next"
-                            href="#carouselExampleFade"
-                            role="button"
-                            data-slide="next"
-                        >
-                            <span className="carousel-control-next-icon" aria-hidden="true" />
-                            {/*<span className="sr-only">Next</span>*/}
-                        </a>
+
+
                     </div>
                 </section>
                 {/* ========================================================================= */}
