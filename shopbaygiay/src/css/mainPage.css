@@ -212,7 +212,7 @@ header {
               display: inline-block; } }
     header .main-nav .social-media {
       width: 20%;
-      max-width: 20%;
+      max-width: 4%;
       display: block;
       position: relative;
       text-align: right;

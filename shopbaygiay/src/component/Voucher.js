@@ -22,106 +22,45 @@ export function Voucher(){
                     <div className="row">
                         <div className="col-md-12">
                             <div className="table-wrap">
-                                <table className="table">
+                                <table style={{textAlign:"center"}} className="table">
                                     <thead className="thead-dark">
                                     <tr>
-                                        <th>STT</th>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>Email</th>
-                                        <th>&nbsp;</th>
+                                        <th>#</th>
+                                        <th>Mã giảm giá</th>
+                                        <th>Tiền giảm</th>
+                                        <th>Voucher nhận từ</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr className="alert" role="alert">
                                         <th scope="row">001</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>markotto@email.com</td>
-                                        <td>
-                                            <a
-                                                href="#"
-                                                className="close"
-                                                data-dismiss="alert"
-                                                aria-label="Close"
-                                            >
-                    <span aria-hidden="true">
-                      <i className="fa fa-close" />
-                    </span>
-                                            </a>
-                                        </td>
+                                        <th>GOLD10</th>
+                                        <td>Giảm 10%</td>
+                                        <td>Thăng hạng vàng</td>
                                     </tr>
                                     <tr className="alert" role="alert">
                                         <th scope="row">002</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>jacobthornton@email.com</td>
-                                        <td>
-                                            <a
-                                                href="#"
-                                                className="close"
-                                                data-dismiss="alert"
-                                                aria-label="Close"
-                                            >
-                    <span aria-hidden="true">
-                      <i className="fa fa-close" />
-                    </span>
-                                            </a>
-                                        </td>
+                                        <th>GOLD15</th>
+                                        <td>Giảm 15%</td>
+                                        <td>Thăng hạng vàng</td>
                                     </tr>
                                     <tr className="alert" role="alert">
                                         <th scope="row">003</th>
-                                        <td>Larry</td>
-                                        <td>the Bird</td>
-                                        <td>larrybird@email.com</td>
-                                        <td>
-                                            <a
-                                                href="#"
-                                                className="close"
-                                                data-dismiss="alert"
-                                                aria-label="Close"
-                                            >
-                    <span aria-hidden="true">
-                      <i className="fa fa-close" />
-                    </span>
-                                            </a>
-                                        </td>
+                                        <th>PLATINUM20</th>
+                                        <td>Giảm 20%</td>
+                                        <td>Thăng hạng kim cương</td>
                                     </tr>
                                     <tr className="alert" role="alert">
                                         <th scope="row">004</th>
-                                        <td>John</td>
-                                        <td>Doe</td>
-                                        <td>johndoe@email.com</td>
-                                        <td>
-                                            <a
-                                                href="#"
-                                                className="close"
-                                                data-dismiss="alert"
-                                                aria-label="Close"
-                                            >
-                    <span aria-hidden="true">
-                      <i className="fa fa-close" />
-                    </span>
-                                            </a>
-                                        </td>
+                                        <th>PLATINUM30</th>
+                                        <td>Giảm 30%</td>
+                                        <td>Thăng hạng kim cương</td>
                                     </tr>
                                     <tr className="alert" role="alert">
                                         <th scope="row">005</th>
-                                        <td>Gary</td>
-                                        <td>Bird</td>
-                                        <td>garybird@email.com</td>
-                                        <td>
-                                            <a
-                                                href="#"
-                                                className="close"
-                                                data-dismiss="alert"
-                                                aria-label="Close"
-                                            >
-                    <span aria-hidden="true">
-                      <i className="fa fa-close" />
-                    </span>
-                                            </a>
-                                        </td>
+                                        <th>FF300</th>
+                                        <td>Giảm 300k</td>
+                                        <td>Shop</td>
                                     </tr>
                                     </tbody>
                                 </table>

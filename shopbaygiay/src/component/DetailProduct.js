@@ -3,9 +3,12 @@ import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import {findByAllIdProduct, findByImageIdProduct, findBySizeIdProduct} from "../service/ProductService";
 import * as productService from "../service/ProductService";
+import {logDOM} from "@testing-library/react";
+import {formatPrice} from "../service/FormatService";
+import * as FormatService from "../service/FormatService";
 
 export function DetailProduct() {
-    const [product, setProduct] = useState([]);
+    const [product, setProduct] = useState({});
     const [sizeProduct, setSizeProduct] = useState([]);
     const [images, setImagesProduct] = useState([]);
     const {id} = useParams();
@@ -16,8 +19,11 @@ export function DetailProduct() {
             findBySizeIdProduct(id);
             findByImageIdProduct(id);
         }
-        findByAllIdProduct(id);
+        // findByAllIdProduct(id);
     }, [id]);
+    // useEffect(() => {
+    //     findByAllIdProduct();
+    // }, [id]);
 
     const findByAllIdProduct = async (id) => {
         const data = await productService.findByAllIdProduct(id);
@@ -32,8 +38,9 @@ export function DetailProduct() {
         setImagesProduct(data);
     };
 
-
-    if(!images) return null
+    console.log("+++++++++++++++")
+    console.log(product)
+    if (!images) return null
     return (
         <>
             <section className="abt">
@@ -139,94 +146,96 @@ export function DetailProduct() {
                             {/* thumbs-wrap.// */}
                             {/* gallery-wrap .end// */}
                         </aside>
-                                <main className="col-lg-6">
-                                    <div className="ps-lg-3">
-                                        <h4 className="title text-dark">
-                                            Nike - Air Force
-                                        </h4>
-                                        <div className="d-flex flex-row my-3">
-                                    <span className="text-muted">
-                <i className="fas fa-shopping-basket fa-sm mx-1"/>
-                <span className="text-success ms-2">154</span> đơn đã bán
-              </span>
+                        <main className="col-lg-6">
+                            <div className="ps-lg-3">
+                                <h4 className="title text-dark">
+                                    {product.name}
+                                </h4>
+                                <div className="d-flex flex-row my-3">
+                                              <span className="text-muted">
+                          <i className="fas fa-shopping-basket fa-sm mx-1"/>
+                          <span className="text-success ms-2">{product.sellNumber}</span> đơn đã bán
+                        </span>
 
-                                        </div>
-                                        <div className="mb-3">
-                                            <span className="h5">1.000.000vnđ</span>
-                                            <span className="text-muted">/đôi</span>
-                                        </div>
-                                        <p>
-                                            Là một loại giày thể thao phổ biến và được ưa chuộng trên toàn thế giới.
-                                            Đôi sneaker không chỉ là một phụ kiện thời trang mà còn là biểu tượng của sự thoải
-                                            mái và cá nhân hóa.
-                                            Đối với tôi, sneaker không chỉ là một đôi giày, mà còn là một phần của cuộc sống
-                                            hàng ngày.
-                                        </p>
-                                        <div className="row">
-                                            <dt className="col-3">Loại giày:</dt>
-                                            <dd className="col-9">Nike</dd>
-                                            <dt className="col-3">Chất liệu:</dt>
-                                            <dd className="col-9">Real</dd>
-                                            <dt className="col-3">Brand</dt>
-                                            <dd className="col-9">Reebook</dd>
-                                        </div>
-                                        <hr/>
-                                        <div className="row mb-4">
-                                            <div className="col-md-4 col-6">
-                                                <label className="mb-2">Kích thước</label>
-                                                <select
-                                                    className="form-select border border-secondary"
-                                                    style={{height: 35}}
-                                                >
-                                                    {sizeProduct.map((sizeProducts, index) =>{
-                                                        return(
-                                                            <option key={index+1}>{sizeProducts.sizeNumber}</option>
-                                                        )
-                                                    })}
-                                                </select>
-                                            </div>
-                                            {/* col.// */}
-                                            <div className="col-md-4 col-6 mb-3">
-                                                <label className="mb-2 d-block">Số lượng</label>
-                                                <div className="input-group mb-3" style={{width: 170}}>
-                                                    <button
-                                                        className="btn btn-white border border-secondary px-3"
-                                                        type="button"
-                                                        id="button-addon1"
-                                                        data-mdb-ripple-color="dark"
-                                                    >
-                                                        <i className="fas fa-minus"/>
-                                                    </button>
-                                                    <input
-                                                        type="text"
-                                                        className="form-control bg-light text-center border border-secondary"
-                                                        placeholder={1}
-                                                        aria-label="Example text with button addon"
-                                                        aria-describedby="button-addon1"
-                                                    />
-                                                    <button
-                                                        className="btn btn-white border border-secondary px-3"
-                                                        type="button"
-                                                        id="button-addon2"
-                                                        data-mdb-ripple-color="dark"
-                                                    >
-                                                        <i className="fas fa-plus"/>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        {/*<a href="#" className="btn btn-warning shadow-0">*/}
-                                        {/*    {" "}*/}
-                                        {/*    Buy now{" "}*/}
-                                        {/*</a>*/}
-                                        <a style={{width: "40%", display: "flex"}} href="#" className="btn btn-dark shadow-0">
-                                            {" "}
-                                            <i style={{color: "white", marginTop: "8%"}}
-                                               className="me-1 fa fa-shopping-basket"/> <p
-                                            style={{color: "white", marginTop: "7%"}}>Thêm vào giỏ hàng{" "}</p>
-                                        </a>
+                                </div>
+                                <div className="mb-3">
+                                    <span className="h5">{product.price &&  FormatService.formatPrice(product.price)}</span>
+                                    <span className="text-muted">/đôi</span>
+                                </div>
+                                <p>
+                                    Là một loại giày thể thao phổ biến và được ưa chuộng trên toàn thế giới.
+                                    Đôi sneaker không chỉ là một phụ kiện thời trang mà còn là biểu tượng của sự thoải
+                                    mái và cá nhân hóa.
+                                    Đối với tôi, sneaker không chỉ là một đôi giày, mà còn là một phần của cuộc sống
+                                    hàng ngày.
+                                </p>
+                                <div className="row">
+                                    <dt className="col-4">Loại giày :</dt>
+                                    <dd className="col-8">{product.typeProduct}</dd>
+                                    <dt className="col-4">Còn lại :</dt>
+                                    <dd className="col-8">{product.numberProduct} đôi</dd>
+                                    <dt className="col-4">Giá vận chuyển :</dt>
+                                    <dd className="col-8">
+                                        {product.shippingCost === 0 ? (<p>Miễn Phí vận chuyển</p>):(product.shippingCost && FormatService.formatPrice(product.shippingCost))}
+                                    </dd>
+                                </div>
+                                <hr/>
+                                <div className="row mb-4">
+                                    <div className="col-md-4 col-6">
+                                        <label className="mb-2">Kích thước</label>
+                                        <select
+                                            className="form-select border border-secondary"
+                                            style={{height: 35}}
+                                        >
+                                            {sizeProduct.map((sizeProducts, index) => {
+                                                return (
+                                                    <option key={index + 1}>{sizeProducts.sizeNumber}</option>
+                                                )
+                                            })}
+                                        </select>
                                     </div>
-                                </main>
+                                    {/* col.// */}
+                                    <div className="col-md-4 col-6 mb-3">
+                                        <label className="mb-2 d-block">Số lượng</label>
+                                        <div className="input-group mb-3" style={{width: 170}}>
+                                            <button
+                                                className="btn btn-white border border-secondary px-3"
+                                                type="button"
+                                                id="button-addon1"
+                                                data-mdb-ripple-color="dark"
+                                            >
+                                                <i className="fas fa-minus"/>
+                                            </button>
+                                            <input
+                                                type="text"
+                                                className="form-control bg-light text-center border border-secondary"
+                                                placeholder={1}
+                                                aria-label="Example text with button addon"
+                                                aria-describedby="button-addon1"
+                                            />
+                                            <button
+                                                className="btn btn-white border border-secondary px-3"
+                                                type="button"
+                                                id="button-addon2"
+                                                data-mdb-ripple-color="dark"
+                                            >
+                                                <i className="fas fa-plus"/>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                {/*<a href="#" className="btn btn-warning shadow-0">*/}
+                                {/*    {" "}*/}
+                                {/*    Buy now{" "}*/}
+                                {/*</a>*/}
+                                <button style={{width: "40%", display: "flex"}} className="btn btn-dark shadow-0">
+                                    {" "}
+                                    <i style={{color: "white", marginTop: "8%"}}
+                                       className="me-1 fa fa-shopping-basket"/> <p
+                                    style={{color: "white", marginTop: "7%"}}>Thêm vào giỏ hàng{" "}</p>
+                                </button>
+                            </div>
+                        </main>
                     </div>
                 </div>
             </section>

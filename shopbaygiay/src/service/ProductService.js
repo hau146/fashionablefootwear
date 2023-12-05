@@ -28,6 +28,7 @@ export const getAllTypeProduct = async () => {
 export const findByAllIdProduct = async (id) => {
     try {
         const response = await axios.get(URL_PRODUCT + `/detailProduct/${id}`);
+        console.log(response)
         return response.data;
     } catch (e) {
         console.log("lỗi hàm getAllTypeProduct");

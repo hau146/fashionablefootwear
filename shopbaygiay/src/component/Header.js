@@ -1,14 +1,82 @@
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import "../css/inputSearch.css"
+import {useEffect, useState} from "react";
+import Swal from "sweetalert2";
+import * as AccountService from "../service/AccountService";
+import {BiCog, BiLogOutCircle, BiUserCircle} from "react-icons/bi";
+import {getIdByUserName} from "../service/AccountService";
 
-export function Header(){
-    return(
+export function Header() {
+    const navigate = useNavigate();
+    const [JwtToken, setJwtToken] = useState(localStorage.getItem("JWT"));
+    const [username, setUsername] = useState("");
+    const [nameAccount, setNameAccount] = useState("");
+    const [nameProduct, setNameProduct] = useState("");
+    const [userId, setUserId] = useState("");
+    const [nameType, setNameType] = useState([]);
+    const roleAdmin = AccountService.checkRollAppUser("ADMIN");
+
+    const getUserName = async () => {
+        const result = await AccountService.infoAppUserByJwtToken();
+        setUsername(result);
+    }
+    const getAppUserId = async () => {
+        const isLoggedIn = AccountService.infoAppUserByJwtToken();
+        if (isLoggedIn) {
+            const id = await AccountService.getIdByUserName(isLoggedIn.sub);
+            setUserId(id.data);
+
+        }
+    }
+    console.log("---------")
+    console.log(userId)
+    // const getTypeProduct = async () => {
+    //     const result = await typeProduct.getAllType();
+    //     setNameType(result);
+    // }
+
+    useEffect(() => {
+        getUserName();
+    }, []);
+
+    useEffect(() => {
+        getAppUserId();
+        // getTypeProduct();
+    }, [])
+
+    const handleLogout = async () => {
+        localStorage.removeItem("JWT");
+        setJwtToken(undefined);
+        setUsername(undefined);
+        await Swal.fire({
+            title: "Đăng xuất thành công!",
+            icon: "success",
+        });
+        navigate("/");
+        window.location.reload();
+    }
+
+    const handleInputChange = (event) => {
+        setNameProduct(event.target.value);
+    }
+    const handleProduct = (nameProduct) => {
+        navigate(`/home/search/${nameProduct}`);
+    }
+    const handleSearch = (event) => {
+        event.preventDefault();
+        handleProduct(nameProduct);
+    }
+
+
+    return (
         <div>
             <header>
                 <div className="main-nav">
                     <div className="logo">
-                        <img src="https://firebasestorage.googleapis.com/v0/b/sneaker-db938.appspot.com/o/image-sneaker%2Flogo-mainPage_pixian_ai.png?alt=media&token=1dc3c108-783e-4ad8-8b34-43684d0ac152" />
+                        <img
+                            src="https://firebasestorage.googleapis.com/v0/b/sneaker-db938.appspot.com/o/image-sneaker%2Flogo-mainPage_pixian_ai.png?alt=media&token=1dc3c108-783e-4ad8-8b34-43684d0ac152"/>
                     </div>
-                    <div className="menu-toggle" />
+                    <div className="menu-toggle"/>
                     <div className="menu">
                         <ul>
                             <li>
@@ -31,24 +99,41 @@ export function Header(){
                                     Liên hệ
                                 </Link>
                             </li>
-                            <li>
-                                <Link to="/voucher">
-                                    Kho voucher
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="/contact">
-                                    Đơn mua
-                                </Link>
-                            </li>
+
+
+                            {JwtToken ? (
+                                <>
+                                    <li>
+                                        <Link to="/voucher">
+                                            Kho voucher
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/contact">
+                                            Đơn mua
+                                        </Link>
+                                    </li>
+                                </>
+                            ) : null}
                         </ul>
                     </div>
+                    <div className="group">
+                        <svg viewBox="0 0 24 24" aria-hidden="true" className="icon">
+                            <g>
+                                <path
+                                    d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"
+                                ></path>
+                            </g>
+                        </svg>
+                        <input className="input" type="search" placeholder="Nhập tên giày"/>
+                    </div>
                     <div className="social-media">
-                        <ul>
+                        <ul style={{marginBottom: "-2rem"}}>
                             <li>
                                 <Link to="/cart">
-                                    <i style={{fontSize:"165%"}} className="fa-solid fa-cart-shopping">
-                                        <span style={{fontSize: "11px",margin: "3px 0px 0px -13%"}} className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    <i style={{fontSize: "165%"}} className="fa-solid fa-cart-shopping">
+                                        <span style={{fontSize: "11px", margin: "5px 0px 0px -13%"}}
+                                              className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                     0
                                     <span className="visually-hidden">unread messages</span>
                                 </span>
@@ -59,11 +144,42 @@ export function Header(){
                         </ul>
                     </div>
                     <div className="book">
-                        <ul>
+                        <ul style={{marginBottom: "0em"}}>
                             <li>
-                                <Link to="/login">
-                                    Đăng nhập
-                                </Link>
+                                {/*<Link to="/login">*/}
+                                {/*    Đăng nhập*/}
+                                {/*</Link>*/}
+
+                                {!username ? (
+                                    <Link to="/login">
+                                        <span className="user-info">Đăng nhập</span>
+                                    </Link>
+                                ) : (
+                                    <span className="user-info" style={{overflow: "hidden"}}>
+                      {userId.name}
+                    </span>
+                                )}
+
+
+                                <div className="user-dropdown-list">
+                                    {JwtToken ? (
+                                        <>
+                                            <Link className="user-dropdown-item" style={{display:"flex"}}>
+                                                <BiLogOutCircle className="me-3 ms-0" size={25}/>
+                                                <div
+                                                    className="dropdown-text"
+                                                    onClick={() => {
+                                                        handleLogout();
+                                                    }}
+                                                >
+                                                    Đăng xuất
+                                                </div>
+                                            </Link>
+                                        </>
+                                    ) : null}
+                                </div>
+
+
                             </li>
                         </ul>
                     </div>
