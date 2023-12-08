@@ -1,10 +1,14 @@
 import {Link, useNavigate} from "react-router-dom";
+import "../css/avatar.css"
 import "../css/inputSearch.css"
 import {useEffect, useState} from "react";
 import Swal from "sweetalert2";
 import * as AccountService from "../service/AccountService";
 import {BiCog, BiLogOutCircle, BiUserCircle} from "react-icons/bi";
 import {getIdByUserName} from "../service/AccountService";
+import {sumProductInCart} from "../service/CartService";
+import * as CartService from "../service/CartService";
+
 
 export function Header() {
     const navigate = useNavigate();
@@ -14,6 +18,7 @@ export function Header() {
     const [nameProduct, setNameProduct] = useState("");
     const [userId, setUserId] = useState("");
     const [nameType, setNameType] = useState([]);
+    const [sumCart, setSumCart] = useState(0);
     const roleAdmin = AccountService.checkRollAppUser("ADMIN");
 
     const getUserName = async () => {
@@ -28,6 +33,11 @@ export function Header() {
 
         }
     }
+    const sumProductInCart = async () => {
+        const data = await CartService.sumProductInCart();
+        console.log(data)
+        setSumCart(data)
+    }
     console.log("---------")
     console.log(userId)
     // const getTypeProduct = async () => {
@@ -41,31 +51,63 @@ export function Header() {
 
     useEffect(() => {
         getAppUserId();
-        // getTypeProduct();
-    }, [])
+        sumProductInCart();
+    }, [sumCart])
 
     const handleLogout = async () => {
         localStorage.removeItem("JWT");
         setJwtToken(undefined);
         setUsername(undefined);
         await Swal.fire({
-            title: "Đăng xuất thành công!",
+            position: "top-center",
             icon: "success",
+            title: "Đăng xuất thành công",
+            showConfirmButton: false,
+            timer: 1700
         });
         navigate("/");
-        window.location.reload();
+    }
+
+    const confirmLogout = async () => {
+        await Swal.fire({
+            title: "Bạn có chắc chắn muốn đăng xuất ?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Xác nhận",
+            cancelButtonText: "Không",
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await handleLogout()
+                // window.location.reload();
+            }
+        });
     }
 
     const handleInputChange = (event) => {
         setNameProduct(event.target.value);
     }
-    const handleProduct = (nameProduct) => {
-        navigate(`/home/search/${nameProduct}`);
+    // const handleProduct = (nameProduct) => {
+    //     navigate(`/home/search/${nameProduct}`);
+    // }
+    // const handleSearch = (event) => {
+    //     event.preventDefault();
+    //     handleProduct(nameProduct);
+    // }
+    const handleSearchInput = (event) => {
+        if (event.key === 'Enter' && nameProduct !== "") {
+            navigate(`/searchProduct/${nameProduct}`)
+        } else if (event.key === 'Enter' && nameProduct === "") {
+            Swal.fire({
+                title: "Vui lòng nhập dữ liệu để tìm giày",
+                icon: "warning",
+            });
+        }
     }
-    const handleSearch = (event) => {
-        event.preventDefault();
-        handleProduct(nameProduct);
-    }
+    const handleCartClick = (id) => {
+        navigate(`/cart/${id}`)
+    };
 
 
     return (
@@ -125,22 +167,35 @@ export function Header() {
                                 ></path>
                             </g>
                         </svg>
-                        <input className="input" type="search" placeholder="Nhập tên giày"/>
+                        <input
+                            onChange={(values) => setNameProduct(values.target.value)}
+                            onKeyPress={handleSearchInput}
+                            className="input" type="text" placeholder="Nhập tên giày"/>
                     </div>
                     <div className="social-media">
                         <ul style={{marginBottom: "-2rem"}}>
-                            <li>
-                                <Link to="/cart">
-                                    <i style={{fontSize: "165%"}} className="fa-solid fa-cart-shopping">
+                            {JwtToken ? (
+                                <>
+                                    <li style={{color:"#37da11"}} onClick={() => handleCartClick(userId.id)}>
+                                        <i style={{fontSize: "165%"}} className="fa-solid fa-cart-shopping">
                                         <span style={{fontSize: "11px", margin: "5px 0px 0px -13%"}}
                                               className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    0
-                                    <span className="visually-hidden">unread messages</span>
+                                    {sumCart}
+                                            <span className="visually-hidden">unread messages</span>
                                 </span>
-                                    </i>
-                                </Link>
-                            </li>
-                            <li><a href="#"><i className="flaticon-twitter"></i></a></li>
+                                        </i>
+                                    </li>
+                                    <li><a href="#"><i className="flaticon-twitter"></i></a></li>
+                                </>
+                            ) : (
+                                <>
+                                    <li style={{color:"#37da11"}} onClick={() => handleCartClick(userId.id)}>
+                                        <i style={{fontSize: "165%"}} className="fa-solid fa-cart-shopping">
+                                        </i>
+                                    </li>
+                                    <li><a href="#"><i className="flaticon-twitter"></i></a></li>
+                                </>
+                            )}
                         </ul>
                     </div>
                     <div className="book">
@@ -155,34 +210,43 @@ export function Header() {
                                         <span className="user-info">Đăng nhập</span>
                                     </Link>
                                 ) : (
-                                    <span className="user-info" style={{overflow: "hidden"}}>
+                                    <span className="user-info" style={{overflow: "hidden", color: "whitesmoke"}}>
                       {userId.name}
                     </span>
                                 )}
 
 
-                                <div className="user-dropdown-list">
-                                    {JwtToken ? (
-                                        <>
-                                            <Link className="user-dropdown-item" style={{display:"flex"}}>
+                                {JwtToken ? (
+                                    <>
+                                        <div className="user-dropdown-list">
+                                            <Link className="user-dropdown-item" style={{display: "flex"}}>
                                                 <BiLogOutCircle className="me-3 ms-0" size={25}/>
                                                 <div
                                                     className="dropdown-text"
                                                     onClick={() => {
-                                                        handleLogout();
+                                                        confirmLogout();
                                                     }}
                                                 >
                                                     Đăng xuất
                                                 </div>
                                             </Link>
-                                        </>
-                                    ) : null}
-                                </div>
+                                        </div>
+                                    </>
+                                ) : null}
 
 
                             </li>
                         </ul>
                     </div>
+                    {JwtToken ? (
+                        <>
+                            <div className="card-avt">
+                                <div className="img">
+                                    <img className="img" src={userId.avatar}/>
+                                </div>
+                            </div>
+                        </>
+                    ) : null}
                 </div>
             </header>
         </div>

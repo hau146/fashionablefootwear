@@ -4,6 +4,7 @@ import * as ImageService from "../service/ImageService";
 import * as ProductService from "../service/ProductService";
 import ReactPaginate from "react-paginate";
 import {Link} from "react-router-dom";
+import * as FormatService from "../service/FormatService";
 
 export function Product() {
     const [size, setSize] = useState([]);
@@ -16,7 +17,7 @@ export function Product() {
     const [refresh, setRefresh] = useState(true);
     const [limit, setLimit] = useState(3);
     const [nameProduct, setNameProduct] = useState("");
-    const [typeId, setTypeId] = useState("");
+    const [typeId, setTypeId] = useState("1");
 
 
     useEffect(() => {
@@ -26,8 +27,8 @@ export function Product() {
     }, []);
     useEffect(() => {
         getAllProduct()
-    }, [nameProduct, typeProduct, currentPage]);
-
+    }, [nameProduct, typeProduct, currentPage, typeId]);
+    console.log(typeId)
     const getAllSize = async () => {
         const data = await SizeService.getAllSize();
         setSize(data);
@@ -120,9 +121,9 @@ export function Product() {
                                 <div className="wrapper">
                                     <ul className="nav nav-tabs border-0" id="myTab" role="tablist">
 
-                                            {typeProduct.map(types => {
-                                                return(
-                                                    <li className="nav-item">
+                                        {typeProduct.map(types => {
+                                            return (
+                                                <li className="nav-item">
                                                     <button
                                                         type="button"
                                                         className="nav-link"
@@ -136,9 +137,9 @@ export function Product() {
                                                     >
                                                         {types.name}
                                                     </button>
-                                                    </li>
-                                                )
-                                            })}
+                                                </li>
+                                            )
+                                        })}
 
                                     </ul>
                                     <div className="tab-content" id="myTabContent">
@@ -153,20 +154,32 @@ export function Product() {
                                                     return (
                                                         <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12"
                                                              key={products.id}>
-                                                                <figure>
+                                                            <figure>
+                                                                <Link to={`/detailProduct/${products.id}`}>
                                                                     <div className="images">
                                                                         <img src={products.image}/>
                                                                     </div>
                                                                     <div className="content">
                                                                         <h4>{products.name}</h4>
-                                                                        <Link to={`/detailProduct/${products.id}`}>Đặt ngay</Link>
+                                                                        <div className="wrapper">
+                                                                            <div className="content"
+                                                                                 style={{display: "flex"}}>
+                                                                                <h5 className="ml-20">đ{products.price && FormatService.formatPrice(products.price)}</h5>
+                                                                                <p style={{
+                                                                                    textAlign: "right",
+                                                                                    margin: "-1% 0 0 0"
+                                                                                }}>
+                                                                                    Đã bán {products.sellNumber}
+                                                                                </p>
+                                                                            </div>
+                                                                        </div>
+                                                                        {/*<Link to={`/detailProduct/${products.id}`}>Đặt ngay</Link>*/}
                                                                     </div>
-                                                                </figure>
+                                                                </Link>
+                                                            </figure>
                                                         </div>
                                                     )
                                                 })}
-
-
                                             </div>
                                         </div>
                                     </div>

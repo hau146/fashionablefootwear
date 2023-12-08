@@ -6,20 +6,32 @@ import * as productService from "../service/ProductService";
 import {logDOM} from "@testing-library/react";
 import {formatPrice} from "../service/FormatService";
 import * as FormatService from "../service/FormatService";
+import {addToCart} from "../service/CartService";
+import * as CartService from "../service/CartService";
+import Swal from "sweetalert2";
+import {toast} from "react-toastify";
+import * as AccountService from "../service/AccountService";
 
 export function DetailProduct() {
     const [product, setProduct] = useState({});
     const [sizeProduct, setSizeProduct] = useState([]);
+    const [image, setImageProduct] = useState([]);
     const [images, setImagesProduct] = useState([]);
     const {id} = useParams();
+    const [sizeToCart, setSizeToCart] = useState(37);
+    const [numberToCart, setNumberToCart] = useState(1)
+    const [userId, setUserId] = useState("");
 
+
+    useEffect(() => {
+        getAppUserId();
+    }, [])
     useEffect(() => {
         if (id) {
             findByAllIdProduct(id);
             findBySizeIdProduct(id);
             findByImageIdProduct(id);
         }
-        // findByAllIdProduct(id);
     }, [id]);
     // useEffect(() => {
     //     findByAllIdProduct();
@@ -35,11 +47,49 @@ export function DetailProduct() {
     };
     const findByImageIdProduct = async (id) => {
         const data = await productService.findByImageIdProduct(id);
-        setImagesProduct(data);
+        setImageProduct(data.slice(0, 1));
+        setImagesProduct(data.slice(1));
     };
+    const getAppUserId = async () => {
+        const isLoggedIn = AccountService.infoAppUserByJwtToken();
+        if (isLoggedIn) {
+            const id = await AccountService.getIdByUserName(isLoggedIn.sub);
+            setUserId(id.data);
 
-    console.log("+++++++++++++++")
-    console.log(product)
+        }
+    }
+    const addToCart = async () => {
+        const values = {
+            numberProduct: numberToCart,
+            sizeProduct: sizeToCart,
+            idProduct: product.id,
+            idAccount: userId.id
+        }
+
+        let status = await CartService.addToCart(values);
+        console.log(status)
+        if (status === 200) {
+            await Swal.fire({
+                position: "top-center",
+                icon: "success",
+                title: "Thêm vào giỏ hàng thành công",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        } else {
+            await Swal.fire({
+                position: "top-center",
+                icon: "error",
+                title: "Có lỗi xảy ra vui lòng thử lại",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+    }
+    console.log(numberToCart)
+    console.log(sizeToCart)
+
+
     if (!images) return null
     return (
         <>
@@ -86,9 +136,19 @@ export function DetailProduct() {
                                         data-bs-ride="carousel"
                                     >
                                         <div className="carousel-inner">
-                                            {images.map(image => {
+                                            {image.map(image => {
                                                 return (
                                                     <div className="carousel-item active">
+                                                        <img
+                                                            className="rounded-4 fit"
+                                                            src={image.image}
+                                                        />
+                                                    </div>
+                                                )
+                                            })}
+                                            {images.map(image => {
+                                                return (
+                                                    <div className="carousel-item">
                                                         <img
                                                             className="rounded-4 fit"
                                                             src={image.image}
@@ -159,7 +219,8 @@ export function DetailProduct() {
 
                                 </div>
                                 <div className="mb-3">
-                                    <span className="h5">{product.price &&  FormatService.formatPrice(product.price)}</span>
+                                    <span
+                                        className="h5">{product.price && FormatService.formatPrice(product.price)}</span>
                                     <span className="text-muted">/đôi</span>
                                 </div>
                                 <p>
@@ -176,7 +237,8 @@ export function DetailProduct() {
                                     <dd className="col-8">{product.numberProduct} đôi</dd>
                                     <dt className="col-4">Giá vận chuyển :</dt>
                                     <dd className="col-8">
-                                        {product.shippingCost === 0 ? (<p>Miễn Phí vận chuyển</p>):(product.shippingCost && FormatService.formatPrice(product.shippingCost))}
+                                        {product.shippingCost === 0 ? (<p>Miễn Phí vận
+                                            chuyển</p>) : (product.shippingCost && FormatService.formatPrice(product.shippingCost))}
                                     </dd>
                                 </div>
                                 <hr/>
@@ -186,10 +248,12 @@ export function DetailProduct() {
                                         <select
                                             className="form-select border border-secondary"
                                             style={{height: 35}}
+                                            onChange={(values) => setSizeToCart(values.target.value)}
                                         >
                                             {sizeProduct.map((sizeProducts, index) => {
                                                 return (
-                                                    <option key={index + 1}>{sizeProducts.sizeNumber}</option>
+                                                    <option value={sizeProducts.sizeNumber}
+                                                            key={index + 1}>{sizeProducts.sizeNumber}</option>
                                                 )
                                             })}
                                         </select>
@@ -198,18 +262,32 @@ export function DetailProduct() {
                                     <div className="col-md-4 col-6 mb-3">
                                         <label className="mb-2 d-block">Số lượng</label>
                                         <div className="input-group mb-3" style={{width: 170}}>
-                                            <button
-                                                className="btn btn-white border border-secondary px-3"
-                                                type="button"
-                                                id="button-addon1"
-                                                data-mdb-ripple-color="dark"
-                                            >
-                                                <i className="fas fa-minus"/>
-                                            </button>
+                                            {numberToCart === 1 ? (
+                                                <button
+                                                    className="btn btn-white border border-secondary px-3"
+                                                    type="button"
+                                                    id="button-addon1"
+                                                    data-mdb-ripple-color="dark"
+                                                    disabled
+                                                >
+                                                    <i className="fas fa-minus"/>
+                                                </button>
+                                            ) : (
+                                                <button
+                                                    className="btn btn-white border border-secondary px-3"
+                                                    type="button"
+                                                    id="button-addon1"
+                                                    data-mdb-ripple-color="dark"
+                                                    onClick={() => setNumberToCart(numberToCart - 1)}
+                                                >
+                                                    <i className="fas fa-minus"/>
+                                                </button>
+                                            )}
                                             <input
+                                                onChange={(values) => setNumberToCart(values.target.value)}
                                                 type="text"
                                                 className="form-control bg-light text-center border border-secondary"
-                                                placeholder={1}
+                                                placeholder={numberToCart}
                                                 aria-label="Example text with button addon"
                                                 aria-describedby="button-addon1"
                                             />
@@ -218,6 +296,7 @@ export function DetailProduct() {
                                                 type="button"
                                                 id="button-addon2"
                                                 data-mdb-ripple-color="dark"
+                                                onClick={() => setNumberToCart(numberToCart + 1)}
                                             >
                                                 <i className="fas fa-plus"/>
                                             </button>
@@ -228,7 +307,8 @@ export function DetailProduct() {
                                 {/*    {" "}*/}
                                 {/*    Buy now{" "}*/}
                                 {/*</a>*/}
-                                <button style={{width: "40%", display: "flex"}} className="btn btn-dark shadow-0">
+                                <button onClick={addToCart} style={{width: "40%", display: "flex"}}
+                                        className="btn btn-dark shadow-0">
                                     {" "}
                                     <i style={{color: "white", marginTop: "8%"}}
                                        className="me-1 fa fa-shopping-basket"/> <p

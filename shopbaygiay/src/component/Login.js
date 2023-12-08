@@ -17,9 +17,12 @@ export function Login() {
             if (tempURL) {
                 navigate(tempURL);
             } else {
-               await Swal.fire({
-                    icon: 'success',
-                    title: "Đăng nhập thành công"
+                await Swal.fire({
+                    position: "top-center",
+                    icon: "success",
+                    title: "Đăng nhập thành công",
+                    showConfirmButton: false,
+                    timer: 1700
                 });
                 navigate(`/`);
                 window.location.reload();
@@ -32,6 +35,8 @@ export function Login() {
             console.log(err);
         }
     }
+
+
     const innitValue = {
         username: "",
         password: ""
