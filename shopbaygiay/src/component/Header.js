@@ -176,20 +176,38 @@ export function Header() {
                         <ul style={{marginBottom: "-2rem"}}>
                             {JwtToken ? (
                                 <>
-                                    <li style={{color:"#37da11"}} onClick={() => handleCartClick(userId.id)}>
-                                        <i style={{fontSize: "165%"}} className="fa-solid fa-cart-shopping">
+                                    {sumCart < 1 ? (
+                                        <>
+                                            <li style={{color: "#37da11"}} onClick={() => handleCartClick(userId.id)}>
+                                                <i style={{fontSize: "165%"}} className="fa-solid fa-cart-shopping">
+                                        <span style={{fontSize: "11px", margin: "5px 0px 0px -13%"}}
+                                              className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                0
+                                            <span className="visually-hidden">unread messages</span>
+                                </span>
+                                                </i>
+                                            </li>
+                                            <li><a href="#"><i className="flaticon-twitter"></i></a></li>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <li style={{color: "#37da11"}} onClick={() => handleCartClick(userId.id)}>
+                                                <i style={{fontSize: "165%"}} className="fa-solid fa-cart-shopping">
                                         <span style={{fontSize: "11px", margin: "5px 0px 0px -13%"}}
                                               className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                     {sumCart}
                                             <span className="visually-hidden">unread messages</span>
                                 </span>
-                                        </i>
-                                    </li>
-                                    <li><a href="#"><i className="flaticon-twitter"></i></a></li>
+                                                </i>
+                                            </li>
+                                            <li><a href="#"><i className="flaticon-twitter"></i></a></li>
+                                        </>
+                                    )}
+
                                 </>
                             ) : (
                                 <>
-                                    <li style={{color:"#37da11"}} onClick={() => handleCartClick(userId.id)}>
+                                    <li style={{color: "#37da11"}} onClick={() => handleCartClick(userId.id)}>
                                         <i style={{fontSize: "165%"}} className="fa-solid fa-cart-shopping">
                                         </i>
                                     </li>

@@ -86,6 +86,9 @@ export function DetailProduct() {
             });
         }
     }
+    const alertMax = async () => {
+        await toast.warning("Số lượng chọn vượt quá số giày còn lại")
+    }
     console.log(numberToCart)
     console.log(sizeToCart)
 
@@ -220,7 +223,7 @@ export function DetailProduct() {
                                 </div>
                                 <div className="mb-3">
                                     <span
-                                        className="h5">{product.price && FormatService.formatPrice(product.price)}</span>
+                                        className="h5">đ{product.price && FormatService.formatPrice(product.price)}</span>
                                     <span className="text-muted">/đôi</span>
                                 </div>
                                 <p>
@@ -269,6 +272,7 @@ export function DetailProduct() {
                                                     id="button-addon1"
                                                     data-mdb-ripple-color="dark"
                                                     disabled
+                                                    style={{height:"10%"}}
                                                 >
                                                     <i className="fas fa-minus"/>
                                                 </button>
@@ -281,25 +285,42 @@ export function DetailProduct() {
                                                     onClick={() => setNumberToCart(numberToCart - 1)}
                                                 >
                                                     <i className="fas fa-minus"/>
+                                                    style={{height:"10%"}}
                                                 </button>
                                             )}
                                             <input
                                                 onChange={(values) => setNumberToCart(values.target.value)}
                                                 type="text"
                                                 className="form-control bg-light text-center border border-secondary"
+                                                disabled
                                                 placeholder={numberToCart}
                                                 aria-label="Example text with button addon"
                                                 aria-describedby="button-addon1"
                                             />
-                                            <button
-                                                className="btn btn-white border border-secondary px-3"
-                                                type="button"
-                                                id="button-addon2"
-                                                data-mdb-ripple-color="dark"
-                                                onClick={() => setNumberToCart(numberToCart + 1)}
-                                            >
-                                                <i className="fas fa-plus"/>
-                                            </button>
+                                            {numberToCart === product.numberProduct ?(
+                                                <button
+                                                    className="btn btn-white border border-secondary px-3"
+                                                    type="button"
+                                                    id="button-addon2"
+                                                    data-mdb-ripple-color="dark"
+                                                    onClick={alertMax}
+                                                    style={{height:"10%"}}
+                                                >
+                                                    <i className="fas fa-plus"/>
+                                                </button>
+                                            ):(
+                                                <button
+                                                    className="btn btn-white border border-secondary px-3"
+                                                    type="button"
+                                                    id="button-addon2"
+                                                    data-mdb-ripple-color="dark"
+                                                    onClick={() => setNumberToCart(numberToCart + 1)}
+                                                    style={{height:"10%"}}
+                                                >
+                                                    <i className="fas fa-plus"/>
+                                                </button>
+                                            )}
+
                                         </div>
                                     </div>
                                 </div>
@@ -310,9 +331,9 @@ export function DetailProduct() {
                                 <button onClick={addToCart} style={{width: "40%", display: "flex"}}
                                         className="btn btn-dark shadow-0">
                                     {" "}
-                                    <i style={{color: "white", marginTop: "8%"}}
+                                    <i style={{color: "white", marginTop: "4%"}}
                                        className="me-1 fa fa-shopping-basket"/> <p
-                                    style={{color: "white", marginTop: "7%"}}>Thêm vào giỏ hàng{" "}</p>
+                                    style={{color: "white", marginTop: "3%"}}>Thêm vào giỏ hàng{" "}</p>
                                 </button>
                             </div>
                         </main>

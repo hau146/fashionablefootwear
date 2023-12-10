@@ -1,4 +1,4 @@
-import "../css/voucher.scss"
+// import "../css/voucher.scss"
 export function Voucher(){
     return(
         <div>

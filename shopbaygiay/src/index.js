@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import "react-toastify/dist/ReactToastify.css"
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {ToastContainer} from "react-toastify";
@@ -19,7 +20,6 @@ import {SearchProduct} from "./component/SearchProduct";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
       <BrowserRouter>
           <Header/>
           <Routes>
@@ -35,9 +35,9 @@ root.render(
               <Route path="/searchProduct/:searchName" element={<SearchProduct/>}></Route>
           </Routes>
           <Footer/>
+          <ToastContainer></ToastContainer>
       </BrowserRouter>
-      <ToastContainer></ToastContainer>
-  </React.StrictMode>
+
 );
 
 // If you want to start measuring performance in your app, pass a function
