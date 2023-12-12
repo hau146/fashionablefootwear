@@ -21,8 +21,7 @@ export const sumProductInCart = async () => {
     }
 }
 export const addToCart = async (values) =>{
-    console.log(values)
-    console.log("++++++++++")
+
     try {
         let response = await axios.post(URL_CART, values);
         return response.status;
@@ -54,6 +53,15 @@ export const reduceTheNumberOf = async (id) =>{
     try {
         let response = await axios.patch(URL_CART + `/reduce?id=${id}`);
         console.log(response.status)
+        return response.status;
+    } catch (e){
+        console.log("lỗi hàm reduceTheNumberOf");
+    }
+}
+
+export const selectPay = async (id) =>{
+    try {
+        let response = await axios.patch(URL_CART + `/selectPay?id=${id}`);
         return response.status;
     } catch (e){
         console.log("lỗi hàm reduceTheNumberOf");
@@ -119,6 +127,15 @@ export const deleteAfterPayment = async (id) =>{
         return response.status;
     } catch (e){
         console.log("lỗi hàm deleteAfterPayment");
+    }
+}
+
+export const deleteProductInCart = async (id) =>{
+    try {
+        let response = await axios.delete(URL_CART + `/deleteProductInCart/${id}`);
+        return response.status;
+    } catch (e){
+        console.log("lỗi hàm deleteProductInCart");
     }
 }
 

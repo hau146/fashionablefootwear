@@ -8,6 +8,7 @@ import {BiCog, BiLogOutCircle, BiUserCircle} from "react-icons/bi";
 import {getIdByUserName} from "../service/AccountService";
 import {sumProductInCart} from "../service/CartService";
 import * as CartService from "../service/CartService";
+import {HiBattery100} from "react-icons/hi2";
 
 
 export function Header() {
@@ -19,7 +20,8 @@ export function Header() {
     const [userId, setUserId] = useState("");
     const [nameType, setNameType] = useState([]);
     const [sumCart, setSumCart] = useState(0);
-    const roleAdmin = AccountService.checkRollAppUser("ADMIN");
+    const member = AccountService.checkRollAppUser("ROLE_MEMBER");
+    const admin = AccountService.checkRollAppUser("ADMIN");
 
     const getUserName = async () => {
         const result = await AccountService.infoAppUserByJwtToken();
@@ -35,15 +37,8 @@ export function Header() {
     }
     const sumProductInCart = async () => {
         const data = await CartService.sumProductInCart();
-        console.log(data)
         setSumCart(data)
     }
-    console.log("---------")
-    console.log(userId)
-    // const getTypeProduct = async () => {
-    //     const result = await typeProduct.getAllType();
-    //     setNameType(result);
-    // }
 
     useEffect(() => {
         getUserName();
@@ -63,7 +58,7 @@ export function Header() {
             icon: "success",
             title: "Đăng xuất thành công",
             showConfirmButton: false,
-            timer: 1700
+            timer: 1300
         });
         navigate("/");
     }
@@ -142,16 +137,25 @@ export function Header() {
                                 </Link>
                             </li>
 
-
-                            {JwtToken ? (
+                            {JwtToken && admin ? (
                                 <>
                                     <li>
-                                        <Link to="/voucher">
+                                        <Link to={`/listProduct`}>
+                                            Danh sách sản phẩm
+                                        </Link>
+                                    </li>
+                                </>
+                            ) : null}
+
+                            {JwtToken && member ? (
+                                <>
+                                    <li>
+                                        <Link to={`/voucher/${userId.id}`}>
                                             Kho voucher
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link to="/contact">
+                                        <Link to={`/history/${userId.id}`}>
                                             Đơn mua
                                         </Link>
                                     </li>
@@ -174,7 +178,7 @@ export function Header() {
                     </div>
                     <div className="social-media">
                         <ul style={{marginBottom: "-2rem"}}>
-                            {JwtToken ? (
+                            {JwtToken && member  ? (
                                 <>
                                     {sumCart < 1 ? (
                                         <>
@@ -219,10 +223,6 @@ export function Header() {
                     <div className="book">
                         <ul style={{marginBottom: "0em"}}>
                             <li>
-                                {/*<Link to="/login">*/}
-                                {/*    Đăng nhập*/}
-                                {/*</Link>*/}
-
                                 {!username ? (
                                     <Link to="/login">
                                         <span className="user-info">Đăng nhập</span>

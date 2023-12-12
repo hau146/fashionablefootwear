@@ -28,7 +28,6 @@ export function Product() {
     useEffect(() => {
         getAllProduct()
     }, [nameProduct, typeProduct, currentPage, typeId]);
-    console.log(typeId)
     const getAllSize = async () => {
         const data = await SizeService.getAllSize();
         setSize(data);
@@ -50,7 +49,6 @@ export function Product() {
 
     const handlePageClick = (event) => {
         setCurrentPage(+event.selected);
-        console.log(+event.selected)
         setRefresh((refresh) => !refresh);
     };
 
@@ -140,8 +138,17 @@ export function Product() {
                                                 </li>
                                             )
                                         })}
-
                                     </ul>
+                                    <div>
+                                        <select style={{width:"13%"}} className="form-select" aria-label="Default select example">
+                                            <option selected>Tìm theo</option>
+                                            <option value="1">Giá thấp đến cao</option>
+                                            <option value="2">Giá cao đến thấp</option>
+                                            {/*<option value="3">Three</option>*/}
+                                        </select>
+                                    </div>
+
+
                                     <div className="tab-content" id="myTabContent">
                                         <div
                                             className="tab-pane fade show active"

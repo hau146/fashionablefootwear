@@ -5,10 +5,11 @@ const URL_VOUCHER = "http://localhost:8080/api/public/voucher"
 export const findAllById = async (id) => {
     try {
         let res = await axios.get(URL_VOUCHER + `?id=${id}`);
+        console.log(res.data)
         return res.data;
 
     } catch (e) {
-        console.log("lỗi hàm findAllById");
+        console.log("lỗi hàm findAllById ở voucher");
     }
 }
 

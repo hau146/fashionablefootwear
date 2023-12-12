@@ -33,9 +33,6 @@ export function DetailProduct() {
             findByImageIdProduct(id);
         }
     }, [id]);
-    // useEffect(() => {
-    //     findByAllIdProduct();
-    // }, [id]);
 
     const findByAllIdProduct = async (id) => {
         const data = await productService.findByAllIdProduct(id);
@@ -65,6 +62,7 @@ export function DetailProduct() {
             idProduct: product.id,
             idAccount: userId.id
         }
+        console.log(values)
 
         let status = await CartService.addToCart(values);
         console.log(status)
@@ -74,7 +72,7 @@ export function DetailProduct() {
                 icon: "success",
                 title: "Thêm vào giỏ hàng thành công",
                 showConfirmButton: false,
-                timer: 1500
+                timer: 1300
             });
         } else {
             await Swal.fire({
@@ -239,7 +237,7 @@ export function DetailProduct() {
                                     <dt className="col-4">Còn lại :</dt>
                                     <dd className="col-8">{product.numberProduct} đôi</dd>
                                     <dt className="col-4">Giá vận chuyển :</dt>
-                                    <dd className="col-8">
+                                    <dd className="col-8">đ
                                         {product.shippingCost === 0 ? (<p>Miễn Phí vận
                                             chuyển</p>) : (product.shippingCost && FormatService.formatPrice(product.shippingCost))}
                                     </dd>
@@ -272,7 +270,6 @@ export function DetailProduct() {
                                                     id="button-addon1"
                                                     data-mdb-ripple-color="dark"
                                                     disabled
-                                                    style={{height:"10%"}}
                                                 >
                                                     <i className="fas fa-minus"/>
                                                 </button>
@@ -285,7 +282,6 @@ export function DetailProduct() {
                                                     onClick={() => setNumberToCart(numberToCart - 1)}
                                                 >
                                                     <i className="fas fa-minus"/>
-                                                    style={{height:"10%"}}
                                                 </button>
                                             )}
                                             <input
@@ -304,7 +300,6 @@ export function DetailProduct() {
                                                     id="button-addon2"
                                                     data-mdb-ripple-color="dark"
                                                     onClick={alertMax}
-                                                    style={{height:"10%"}}
                                                 >
                                                     <i className="fas fa-plus"/>
                                                 </button>
@@ -315,7 +310,6 @@ export function DetailProduct() {
                                                     id="button-addon2"
                                                     data-mdb-ripple-color="dark"
                                                     onClick={() => setNumberToCart(numberToCart + 1)}
-                                                    style={{height:"10%"}}
                                                 >
                                                     <i className="fas fa-plus"/>
                                                 </button>

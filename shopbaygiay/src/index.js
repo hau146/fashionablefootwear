@@ -17,6 +17,12 @@ import {Cart} from "./component/Cart";
 import {Voucher} from "./component/Voucher";
 import {DetailProduct} from "./component/DetailProduct";
 import {SearchProduct} from "./component/SearchProduct";
+import {HistoryPayCart} from "./component/HistoryPayCart";
+import {ProductList} from "./component/admin/ProductList";
+import {EnumAppUserRole} from "./component/config/EnumAppUserRoles";
+import Authentication from "./component/config/Authentication";
+import AuthorOfCustomer from "./component/config/AuthorOfCustomer";
+import Error from "./component/config/Error";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -28,12 +34,30 @@ root.render(
               <Route path="/signUp" element={<SignUp/>}></Route>
               <Route path="/contact" element={<Contact/>}></Route>
               <Route path="/about" element={<AboutUs/>}></Route>
-              <Route path="/product" element={<Product/>}></Route>
-              <Route path="/cart/:id" element={<Cart/>}></Route>
-              <Route path="/voucher" element={<Voucher/>}></Route>
-              <Route path="/detailProduct/:id" element={<DetailProduct/>}></Route>
               <Route path="/searchProduct/:searchName" element={<SearchProduct/>}></Route>
-          </Routes>
+              <Route path="/detailProduct/:id" element={<DetailProduct/>}></Route>
+              <Route path="/product" element={<Product/>}></Route>
+              <Route path="/403" element={<Error/>}></Route>
+
+              <Route element={
+                  <Authentication
+                      allowedRoles={[
+                          EnumAppUserRole.ADMIN,
+                          EnumAppUserRole.MEMBER,
+                      ]}
+                  />
+              }>
+
+                  <Route path="/listProduct" element={<ProductList/>}></Route>
+
+                  <Route element={<AuthorOfCustomer />}>
+                      <Route path="/cart/:id" element={<Cart/>}></Route>
+                      <Route path="/voucher/:id" element={<Voucher/>}></Route>
+                      <Route path="/history/:id" element={<HistoryPayCart/>}></Route>
+                  </Route>
+
+              </Route>
+      </Routes>
           <Footer/>
           <ToastContainer></ToastContainer>
       </BrowserRouter>

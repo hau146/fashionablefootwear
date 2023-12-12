@@ -22,7 +22,7 @@ export function Login() {
                     icon: "success",
                     title: "Đăng nhập thành công",
                     showConfirmButton: false,
-                    timer: 1700
+                    timer: 1300
                 });
                 navigate(`/`);
                 window.location.reload();

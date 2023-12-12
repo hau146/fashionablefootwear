@@ -47,10 +47,17 @@ export const findBySizeIdProduct = async (id) => {
 export const findByImageIdProduct = async (id) => {
     try {
         const response = await axios.get(URL_PRODUCT + `/detailImageProduct/${id}`);
-        console.log(response)
         return response.data;
     } catch (e) {
         console.log("lỗi hàm getAllTypeProduct");
+    }
+}
+export const deleteById = async (id) =>{
+    try {
+        let response = await axios.patch(URL_PRODUCT + `/delete?id=${id}`);
+        return response.status;
+    } catch (e){
+        console.log("lỗi hàm increasingTheNumber");
     }
 }
 

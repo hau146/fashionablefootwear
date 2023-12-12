@@ -1,5 +1,22 @@
 // import "../css/voucher.scss"
+import * as VoucherService from "../service/VoucherService";
+import {useParams} from "react-router-dom";
+import {useEffect, useState} from "react";
+
 export function Voucher(){
+    const {id} = useParams();
+    console.log(id)
+    const [voucherAccount, setVoucherAccount] = useState([]);
+
+    useEffect(() => {
+        findAllById(id)
+    }, [id])
+    const findAllById = async (id) => {
+        const data = await VoucherService.findAllById(id);
+        setVoucherAccount(data);
+    };
+
+
     return(
         <div>
             <section className="abt">
@@ -28,40 +45,20 @@ export function Voucher(){
                                         <th>#</th>
                                         <th>Mã giảm giá</th>
                                         <th>Tiền giảm</th>
-                                        <th>Voucher nhận từ</th>
+                                        <th>Tình trạng</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr className="alert" role="alert">
-                                        <th scope="row">001</th>
-                                        <th>GOLD10</th>
-                                        <td>Giảm 10%</td>
-                                        <td>Thăng hạng vàng</td>
-                                    </tr>
-                                    <tr className="alert" role="alert">
-                                        <th scope="row">002</th>
-                                        <th>GOLD15</th>
-                                        <td>Giảm 15%</td>
-                                        <td>Thăng hạng vàng</td>
-                                    </tr>
-                                    <tr className="alert" role="alert">
-                                        <th scope="row">003</th>
-                                        <th>PLATINUM20</th>
-                                        <td>Giảm 20%</td>
-                                        <td>Thăng hạng kim cương</td>
-                                    </tr>
-                                    <tr className="alert" role="alert">
-                                        <th scope="row">004</th>
-                                        <th>PLATINUM30</th>
-                                        <td>Giảm 30%</td>
-                                        <td>Thăng hạng kim cương</td>
-                                    </tr>
-                                    <tr className="alert" role="alert">
-                                        <th scope="row">005</th>
-                                        <th>FF300</th>
-                                        <td>Giảm 300k</td>
-                                        <td>Shop</td>
-                                    </tr>
+                                    {voucherAccount.map((voucherAccounts, index) => {
+                                        return(
+                                            <tr className="alert" role="alert">
+                                                <th scope="row">{index+1}</th>
+                                                <th>{voucherAccounts.code}</th>
+                                                <td>{voucherAccounts.name}</td>
+                                                <td>{voucherAccounts.status === true ? "Chưa sử dụng":"Đã sử dụng"}</td>
+                                            </tr>
+                                        )
+                                    })}
                                     </tbody>
                                 </table>
                             </div>
