@@ -1,14 +1,6 @@
 import {Link, useNavigate, useParams} from "react-router-dom";
+import "../css/profile.css"
 import "../css/radioPay.css"
-import * as ProductService from "../service/ProductService";
-import {
-    deleteAfterPayment,
-    deleteProductInCart,
-    increasingTheNumber,
-    payProduct,
-    selectPay,
-    showCartById
-} from "../service/CartService";
 import {useEffect, useState} from "react";
 import * as CartService from "../service/CartService";
 import ReactPaginate from "react-paginate";
@@ -17,10 +9,8 @@ import * as AccountService from "../service/AccountService";
 import {vndToUsd} from "../service/FormatService";
 import Swal from "sweetalert2";
 import {PayPalButton} from "react-paypal-button-v2";
-import {findByCode} from "../service/VoucherService";
 import * as VoucherService from "../service/VoucherService";
 import {toast} from "react-toastify";
-import {sumTotalPriceById, updateRankAccount} from "../service/OrderProductDetailService";
 import * as OrderProductDetailService from "../service/OrderProductDetailService";
 
 export function Cart() {
@@ -578,6 +568,7 @@ export function Cart() {
                                 </div>
                             </div>
                         </div>
+
                     </section>
                 </div>
             ) : (

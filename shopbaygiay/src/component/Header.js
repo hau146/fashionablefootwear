@@ -8,8 +8,6 @@ import {BiCog, BiLogOutCircle, BiUserCircle} from "react-icons/bi";
 import {getIdByUserName} from "../service/AccountService";
 import {sumProductInCart} from "../service/CartService";
 import * as CartService from "../service/CartService";
-import {HiBattery100} from "react-icons/hi2";
-
 
 export function Header() {
     const navigate = useNavigate();
@@ -40,6 +38,12 @@ export function Header() {
         setSumCart(data)
     }
 
+    // useEffect(() => {
+    //     const JwtToken = AccountService.infoAppUserByJwtToken();
+    //     if (JwtToken) {
+    //         navigate(-1);
+    //     }
+    // }, []);
     useEffect(() => {
         getUserName();
     }, []);
@@ -258,11 +262,13 @@ export function Header() {
                     </div>
                     {JwtToken ? (
                         <>
-                            <div className="card-avt">
-                                <div className="img">
-                                    <img className="img" src={userId.avatar}/>
+                            <Link to={"/profile"}>
+                                <div className="card-avt">
+                                    <div className="img">
+                                        <img className="img" src={userId.avatar}/>
+                                    </div>
                                 </div>
-                            </div>
+                            </Link>
                         </>
                     ) : null}
                 </div>

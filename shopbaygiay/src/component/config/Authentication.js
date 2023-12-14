@@ -23,6 +23,6 @@ const Authentication = ({ allowedRoles }) => {
 
     return roles && hasValueInAuthorProperty(allowedRoles, roles) ? (
         <Outlet />
-    ) : <Navigate to={`/403`} />
+    ) : <Navigate to={`/login`} />
 }
 export default Authentication;

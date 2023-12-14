@@ -5,19 +5,23 @@ import * as OrderProductDetailService from "../service/OrderProductDetailService
 import * as FormatService from "../service/FormatService";
 import ReactPaginate from "react-paginate";
 import moment from "moment";
+import * as AccountService from "../service/AccountService";
 export function HistoryPayCart() {
     const [totalPages, setTotalPages] = useState(0);
     const [records, setRecords] = useState("");
     const [orderProduct, setOrderProduct] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
     const [limit, setLimit] = useState(4);
+    const [userId, setUserId] = useState("");
     const {id} = useParams();
 
 
     useEffect(() => {
         findAllById()
     }, [id, currentPage]);
-
+    useEffect(() => {
+        getAppUserId();
+    }, [])
 
     const findAllById = async () => {
         const res = await OrderProductDetailService.findAllById(currentPage, limit, id);
@@ -32,6 +36,13 @@ export function HistoryPayCart() {
         const formattedDateTime = moment(dateTimeString).format("DD-MM-YYYY HH:mm");
         return formattedDateTime;
     };
+    const getAppUserId = async () => {
+        const isLoggedIn = AccountService.infoAppUserByJwtToken();
+        if (isLoggedIn) {
+            const id = await AccountService.getIdByUserName(isLoggedIn.sub);
+            setUserId(id.data);
+        }
+    }
 
 
 
@@ -98,7 +109,10 @@ export function HistoryPayCart() {
                                                                min={1} max={100}/>
                                                     </div>
                                                 </td>
-                                                <td style={{width:"30%"}}>{orderProducts.nameOrderStatus}</td>
+                                                <td style={{width:"30%"}}>
+                                                    {orderProducts.nameOrderStatus}
+                                                    <p style={{fontWeight:"bold", color:"black"}}>Nơi nhận: {userId.address}</p>
+                                                </td>
                                             </tr>
                                         )
                                     })}

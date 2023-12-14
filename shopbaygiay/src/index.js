@@ -23,6 +23,7 @@ import {EnumAppUserRole} from "./component/config/EnumAppUserRoles";
 import Authentication from "./component/config/Authentication";
 import AuthorOfCustomer from "./component/config/AuthorOfCustomer";
 import Error from "./component/config/Error";
+import {Profile} from "./component/Profile";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -49,6 +50,7 @@ root.render(
               }>
 
                   <Route path="/listProduct" element={<ProductList/>}></Route>
+                  <Route path="/profile" element={<Profile/>}></Route>
 
                   <Route element={<AuthorOfCustomer />}>
                       <Route path="/cart/:id" element={<Cart/>}></Route>
