@@ -648,7 +648,7 @@ transform: scale(1.1)}
     .menu-items .wrapper .tab-content {
       position: relative;
       display: block;
-      margin: 1.25rem 0;
+      margin: 0 0 -20% 0;
       transition: all ease .5s;
       padding: .625rem 0; }
       .menu-items .wrapper .tab-content .tab-pane {
@@ -660,7 +660,7 @@ transform: scale(1.1)}
           display: block;
           padding: 7% 0;
           position: relative;
-          height: 100%;
+          height: 55%;
           width: 100%;
           object-fit: cover;
           transition: all .2s;

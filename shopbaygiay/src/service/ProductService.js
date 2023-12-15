@@ -4,11 +4,12 @@ const URL_PRODUCT = "http://localhost:8080/api/public/product"
 const URL_TYPE_PRODUCT = "http://localhost:8080/api/public/typeProduct"
 
 
-export const getAllProduct = async (currentPage,limit,nameProduct,typeId) => {
-    console.log(nameProduct)
-    console.log(typeId)
+export const getAllProduct = async (currentPage,limit,nameProduct,typeId, typeSort) => {
+    console.log(typeof typeSort)
+    typeSort = +typeSort;
+    console.log(typeof typeSort)
     try {
-        let res = await axios.get(URL_PRODUCT +`?page=${currentPage}&limit=${limit}&nameProduct=${nameProduct}&typeId=${typeId}`);
+        let res = await axios.get(URL_PRODUCT +`?page=${currentPage}&limit=${limit}&nameProduct=${nameProduct}&typeId=${typeId}&typeSort=${typeSort}`);
         return res;
 
     } catch (e) {
@@ -28,7 +29,7 @@ export const getAllTypeProduct = async () => {
 export const findByAllIdProduct = async (id) => {
     try {
         const response = await axios.get(URL_PRODUCT + `/detailProduct/${id}`);
-        console.log(response)
+        console.log(response.data)
         return response.data;
     } catch (e) {
         console.log("lỗi hàm getAllTypeProduct");

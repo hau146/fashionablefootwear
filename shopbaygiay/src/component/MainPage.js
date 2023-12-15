@@ -127,7 +127,7 @@ export function MainPage(){
                                     </p>
                                 </div>
                             </div>
-                            <div className="col-md-4 col-sm-6 col-xs-12">
+                            <div className="col-md-3 col-sm-6 col-xs-12">
                                 <div className="wrapper">
                                     <div className="content">
                                         <ol>
@@ -142,7 +142,7 @@ export function MainPage(){
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-md-4 col-sm-6 col-xs-12">
+                            <div className="col-md-3 col-sm-6 col-xs-12">
                                 <div className="wrapper">
                                     <div className="content">
                                         <ol>
@@ -158,7 +158,7 @@ export function MainPage(){
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-md-4 col-sm-6 col-xs-12">
+                            <div className="col-md-3 col-sm-6 col-xs-12">
                                 <div className="wrapper">
                                     <div className="content">
                                         <ol>
@@ -174,11 +174,27 @@ export function MainPage(){
                                     </div>
                                 </div>
                             </div>
+                            <div className="col-md-3 col-sm-6 col-xs-12">
+                                <div className="wrapper">
+                                    <div className="content">
+                                        <ol>
+                                            <li>
+                                                <i className="fa-regular fa-face-laugh-squint"></i>
+                                                <h4>Miễn phí vận chuyển toàn quốc</h4>
+                                                <p>
+                                                    Bạn sẽ không hài lòng nếu có phí ship phải không nào ? Chúng tôi hỗ trợ miễn phí vận chuyển cho mọi đơn hàng.
+                                                    Mang đến sự thoải mái ngay cả lúc bạn đặt hàng
+                                                </p>
+                                            </li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
                 {/* ========================================================================= */}
-                <section className="se-five">
+                <section className="se-five" style={{margin:"5% 0"}}>
                     <div className="shap" />
                     <div className="container">
                         <div className="row">
@@ -191,7 +207,7 @@ export function MainPage(){
                                         Với sự kết hợp giữa phong cách đương đại và sự tiện ích,
                                         nó sẽ làm bạn xuất sắc trong mọi hoàn cảnh.
                                     </p>
-                                    <a>Đi tới</a>
+                                    <Link to="/product">Đi tới</Link>
                                 </div>
                             </div>
                         </div>
@@ -199,348 +215,348 @@ export function MainPage(){
                 </section>
                 {/* ========================================================================= */}
                 {/* ========================================================================= */}
-                <section className="menu-items">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-12">
-                                <div className="heading">
-                                    <h2>1 vài sản phẩm</h2>
-                                </div>
-                            </div>
-                            <div className="col-12">
-                                <div className="wrapper">
-                                    <ul className="nav nav-tabs border-0" id="myTab" role="tablist">
-                                        <li className="nav-item">
-                                            <a
-                                                className="nav-link active"
-                                                id="starters-item"
-                                                data-toggle="tab"
-                                                href="#starters"
-                                                role="tab"
-                                                aria-controls="all"
-                                                aria-selected="true"
-                                            >
-                                                Nike
-                                            </a>
-                                        </li>
-                                        <li className="nav-item">
-                                            <a
-                                                className="nav-link"
-                                                id="breakfast-items"
-                                                data-toggle="tab"
-                                                href="#breakfast"
-                                                role="tab"
-                                                aria-controls="profile"
-                                                aria-selected="false"
-                                            >
-                                                Adidas
-                                            </a>
-                                        </li>
-                                        <li className="nav-item">
-                                            <a
-                                                className="nav-link"
-                                                id="lunch-items"
-                                                data-toggle="tab"
-                                                href="#lunch"
-                                                role="tab"
-                                                aria-controls="contact"
-                                                aria-selected="false"
-                                            >
-                                                Jordan
-                                            </a>
-                                        </li>
-                                        <li className="nav-item">
-                                            <a
-                                                className="nav-link"
-                                                id="dinner-item"
-                                                data-toggle="tab"
-                                                href="#dinner"
-                                                role="tab"
-                                                aria-controls="contact"
-                                                aria-selected="false"
-                                            >
-                                                Vans
-                                            </a>
-                                        </li>
-                                        <li className="nav-item">
-                                            <a
-                                                className="nav-link"
-                                                id="beverage-item"
-                                                data-toggle="tab"
-                                                href="#beverage"
-                                                role="tab"
-                                                aria-controls="contact"
-                                                aria-selected="false"
-                                            >
-                                                Converse
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <div className="tab-content" id="myTabContent">
-                                        <div
-                                            className="tab-pane fade show active"
-                                            id="starters"
-                                            role="tabpanel"
-                                            aria-labelledby="starters-item"
-                                        >
-                                            <div className="row">
-                                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                                    <figure>
-                                                        <div className="images">
-                                                            <img src="https://firebasestorage.googleapis.com/v0/b/sneaker-db938.appspot.com/o/image-sneaker%2Fnike3.png?alt=media&token=9de99014-b0b9-4701-97bb-b22cc6731f1f" />
-                                                        </div>
-                                                        <div className="content">
-                                                            <h4>Nike Fleshes out the Air Max</h4>
-                                                            <a>Đặt ngay</a>
-                                                        </div>
-                                                    </figure>
-                                                </div>
-                                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                                    <figure>
-                                                        <div className="images">
-                                                            <img src="https://firebasestorage.googleapis.com/v0/b/sneaker-db938.appspot.com/o/image-sneaker%2Fnike1.png?alt=media&token=669f04ff-08d8-4c2b-9ab1-7cd0ac960eb1" />
-                                                        </div>
-                                                        <div className="content">
-                                                            <h4>Ui Design Nike Air Max Shoe</h4>
-                                                            <a>Đặt ngay</a>
-                                                        </div>
-                                                    </figure>
-                                                </div>
-                                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                                    <figure>
-                                                        <div className="images">
-                                                            <img src="https://firebasestorage.googleapis.com/v0/b/sneaker-db938.appspot.com/o/image-sneaker%2Fnike2.png?alt=media&token=3a730e26-da03-4888-b379-33492aaf75d3" />
-                                                        </div>
-                                                        <div className="content">
-                                                            <h4>Air Force 1 "07 LV8"Kings Sneakers</h4>
-                                                            <a>Đặt ngay</a>
-                                                            </div>
-                                                    </figure>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div
-                                            className="tab-pane fade"
-                                            id="breakfast"
-                                            role="tabpanel"
-                                            aria-labelledby="breakfast-items"
-                                        >
-                                            <div className="row">
-                                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                                    <figure>
-                                                        <div className="images">
-                                                            <img src="assets/images/menu/4.jpg" />
-                                                        </div>
-                                                        <div className="content">
-                                                            <h4>Spicy Clup</h4>
-                                                            <p>
-                                                                Pork, chicken and vegetable fried rolls served with
-                                                                lettuce wraps
-                                                            </p>
-                                                            <a>order now</a>
-                                                        </div>
-                                                    </figure>
-                                                </div>
-                                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                                    <figure>
-                                                        <div className="images">
-                                                            <img src="assets/images/menu/5.jpg" />
-                                                        </div>
-                                                        <div className="content">
-                                                            <h4>Tuscan Flatbread</h4>
-                                                            <p>
-                                                                Pork, chicken and vegetable fried rolls served with
-                                                                lettuce wraps
-                                                            </p>
-                                                            <a>order now</a>
-                                                        </div>
-                                                    </figure>
-                                                </div>
-                                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                                    <figure>
-                                                        <div className="images">
-                                                            <img src="assets/images/menu/6.jpg" />
-                                                        </div>
-                                                        <div className="content">
-                                                            <h4>Almond Baked Brie</h4>
-                                                            <p>
-                                                                Pork, chicken and vegetable fried rolls served with
-                                                                lettuce wraps
-                                                            </p>
-                                                            <a>order now</a>
-                                                        </div>
-                                                    </figure>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div
-                                            className="tab-pane fade"
-                                            id="lunch"
-                                            role="tabpanel"
-                                            aria-labelledby="lunch-items"
-                                        >
-                                            <div className="row">
-                                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                                    <figure>
-                                                        <div className="images">
-                                                            <img src="assets/images/menu/4.jpg" />
-                                                        </div>
-                                                        <div className="content">
-                                                            <h4>Spicy Clup</h4>
-                                                            <p>
-                                                                Pork, chicken and vegetable fried rolls served with
-                                                                lettuce wraps
-                                                            </p>
-                                                            <a>order now</a>
-                                                        </div>
-                                                    </figure>
-                                                </div>
-                                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                                    <figure>
-                                                        <div className="images">
-                                                            <img src="assets/images/menu/5.jpg" />
-                                                        </div>
-                                                        <div className="content">
-                                                            <h4>Spicy Clup</h4>
-                                                            <p>
-                                                                Pork, chicken and vegetable fried rolls served with
-                                                                lettuce wraps
-                                                            </p>
-                                                            <a>order now</a>
-                                                        </div>
-                                                    </figure>
-                                                </div>
-                                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                                    <figure>
-                                                        <div className="images">
-                                                            <img src="assets/images/menu/6.jpg" />
-                                                        </div>
-                                                        <div className="content">
-                                                            <h4>Spicy Clup</h4>
-                                                            <p>
-                                                                Pork, chicken and vegetable fried rolls served with
-                                                                lettuce wraps
-                                                            </p>
-                                                            <a>order now</a>
-                                                        </div>
-                                                    </figure>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div
-                                            className="tab-pane fade"
-                                            id="dinner"
-                                            role="tabpanel"
-                                            aria-labelledby="dinner-item"
-                                        >
-                                            <div className="row">
-                                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                                    <figure>
-                                                        <div className="images">
-                                                            <img src="assets/images/menu/4.jpg" />
-                                                        </div>
-                                                        <div className="content">
-                                                            <h4>Spicy Clup</h4>
-                                                            <p>
-                                                                Pork, chicken and vegetable fried rolls served with
-                                                                lettuce wraps
-                                                            </p>
-                                                            <a>order now</a>
-                                                        </div>
-                                                    </figure>
-                                                </div>
-                                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                                    <figure>
-                                                        <div className="images">
-                                                            <img src="assets/images/menu/5.jpg" />
-                                                        </div>
-                                                        <div className="content">
-                                                            <h4>Spicy Clup</h4>
-                                                            <p>
-                                                                Pork, chicken and vegetable fried rolls served with
-                                                                lettuce wraps
-                                                            </p>
-                                                            <a>order now</a>
-                                                        </div>
-                                                    </figure>
-                                                </div>
-                                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                                    <figure>
-                                                        <div className="images">
-                                                            <img src="assets/images/menu/6.jpg" />
-                                                        </div>
-                                                        <div className="content">
-                                                            <h4>Spicy Clup</h4>
-                                                            <p>
-                                                                Pork, chicken and vegetable fried rolls served with
-                                                                lettuce wraps
-                                                            </p>
-                                                            <a>order now</a>
-                                                        </div>
-                                                    </figure>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div
-                                            className="tab-pane fade"
-                                            id="beverage"
-                                            role="tabpanel"
-                                            aria-labelledby="beverage-item"
-                                        >
-                                            <div className="row">
-                                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                                    <figure>
-                                                        <div className="images">
-                                                            <img src="assets/images/menu/4.jpg" />
-                                                        </div>
-                                                        <div className="content">
-                                                            <h4>Almond Baked Brie</h4>
-                                                            <p>
-                                                                Pork, chicken and vegetable fried rolls served with
-                                                                lettuce wraps
-                                                            </p>
-                                                            <a>order now</a>
-                                                        </div>
-                                                    </figure>
-                                                </div>
-                                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                                    <figure>
-                                                        <div className="images">
-                                                            <img src="assets/images/menu/5.jpg" />
-                                                        </div>
-                                                        <div className="content">
-                                                            <h4>Tuscan Flatbread</h4>
-                                                            <p>
-                                                                Pork, chicken and vegetable fried rolls served with
-                                                                lettuce wraps
-                                                            </p>
-                                                            <a>order now</a>
-                                                        </div>
-                                                    </figure>
-                                                </div>
-                                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                                    <figure>
-                                                        <div className="images">
-                                                            <img src="assets/images/menu/6.jpg" />
-                                                        </div>
-                                                        <div className="content">
-                                                            <h4>Spicy Clup</h4>
-                                                            <p>
-                                                                Pork, chicken and vegetable fried rolls served with
-                                                                lettuce wraps
-                                                            </p>
-                                                            <a>order now</a>
-                                                        </div>
-                                                    </figure>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                {/*<section className="menu-items">*/}
+                {/*    <div className="container">*/}
+                {/*        <div className="row">*/}
+                {/*            <div className="col-12">*/}
+                {/*                <div className="heading">*/}
+                {/*                    <h2>1 vài sản phẩm</h2>*/}
+                {/*                </div>*/}
+                {/*            </div>*/}
+                {/*            <div className="col-12">*/}
+                {/*                <div className="wrapper">*/}
+                {/*                    <ul className="nav nav-tabs border-0" id="myTab" role="tablist">*/}
+                {/*                        <li className="nav-item">*/}
+                {/*                            <a*/}
+                {/*                                className="nav-link active"*/}
+                {/*                                id="starters-item"*/}
+                {/*                                data-toggle="tab"*/}
+                {/*                                href="#starters"*/}
+                {/*                                role="tab"*/}
+                {/*                                aria-controls="all"*/}
+                {/*                                aria-selected="true"*/}
+                {/*                            >*/}
+                {/*                                Nike*/}
+                {/*                            </a>*/}
+                {/*                        </li>*/}
+                {/*                        <li className="nav-item">*/}
+                {/*                            <a*/}
+                {/*                                className="nav-link"*/}
+                {/*                                id="breakfast-items"*/}
+                {/*                                data-toggle="tab"*/}
+                {/*                                href="#breakfast"*/}
+                {/*                                role="tab"*/}
+                {/*                                aria-controls="profile"*/}
+                {/*                                aria-selected="false"*/}
+                {/*                            >*/}
+                {/*                                Adidas*/}
+                {/*                            </a>*/}
+                {/*                        </li>*/}
+                {/*                        <li className="nav-item">*/}
+                {/*                            <a*/}
+                {/*                                className="nav-link"*/}
+                {/*                                id="lunch-items"*/}
+                {/*                                data-toggle="tab"*/}
+                {/*                                href="#lunch"*/}
+                {/*                                role="tab"*/}
+                {/*                                aria-controls="contact"*/}
+                {/*                                aria-selected="false"*/}
+                {/*                            >*/}
+                {/*                                Jordan*/}
+                {/*                            </a>*/}
+                {/*                        </li>*/}
+                {/*                        <li className="nav-item">*/}
+                {/*                            <a*/}
+                {/*                                className="nav-link"*/}
+                {/*                                id="dinner-item"*/}
+                {/*                                data-toggle="tab"*/}
+                {/*                                href="#dinner"*/}
+                {/*                                role="tab"*/}
+                {/*                                aria-controls="contact"*/}
+                {/*                                aria-selected="false"*/}
+                {/*                            >*/}
+                {/*                                Vans*/}
+                {/*                            </a>*/}
+                {/*                        </li>*/}
+                {/*                        <li className="nav-item">*/}
+                {/*                            <a*/}
+                {/*                                className="nav-link"*/}
+                {/*                                id="beverage-item"*/}
+                {/*                                data-toggle="tab"*/}
+                {/*                                href="#beverage"*/}
+                {/*                                role="tab"*/}
+                {/*                                aria-controls="contact"*/}
+                {/*                                aria-selected="false"*/}
+                {/*                            >*/}
+                {/*                                Converse*/}
+                {/*                            </a>*/}
+                {/*                        </li>*/}
+                {/*                    </ul>*/}
+                {/*                    <div className="tab-content" id="myTabContent">*/}
+                {/*                        <div*/}
+                {/*                            className="tab-pane fade show active"*/}
+                {/*                            id="starters"*/}
+                {/*                            role="tabpanel"*/}
+                {/*                            aria-labelledby="starters-item"*/}
+                {/*                        >*/}
+                {/*                            <div className="row">*/}
+                {/*                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12">*/}
+                {/*                                    <figure>*/}
+                {/*                                        <div className="images">*/}
+                {/*                                            <img src="https://firebasestorage.googleapis.com/v0/b/sneaker-db938.appspot.com/o/image-sneaker%2Fnike3.png?alt=media&token=9de99014-b0b9-4701-97bb-b22cc6731f1f" />*/}
+                {/*                                        </div>*/}
+                {/*                                        <div className="content">*/}
+                {/*                                            <h4>Nike Fleshes out the Air Max</h4>*/}
+                {/*                                            <a>Đặt ngay</a>*/}
+                {/*                                        </div>*/}
+                {/*                                    </figure>*/}
+                {/*                                </div>*/}
+                {/*                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12">*/}
+                {/*                                    <figure>*/}
+                {/*                                        <div className="images">*/}
+                {/*                                            <img src="https://firebasestorage.googleapis.com/v0/b/sneaker-db938.appspot.com/o/image-sneaker%2Fnike1.png?alt=media&token=669f04ff-08d8-4c2b-9ab1-7cd0ac960eb1" />*/}
+                {/*                                        </div>*/}
+                {/*                                        <div className="content">*/}
+                {/*                                            <h4>Ui Design Nike Air Max Shoe</h4>*/}
+                {/*                                            <a>Đặt ngay</a>*/}
+                {/*                                        </div>*/}
+                {/*                                    </figure>*/}
+                {/*                                </div>*/}
+                {/*                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12">*/}
+                {/*                                    <figure>*/}
+                {/*                                        <div className="images">*/}
+                {/*                                            <img src="https://firebasestorage.googleapis.com/v0/b/sneaker-db938.appspot.com/o/image-sneaker%2Fnike2.png?alt=media&token=3a730e26-da03-4888-b379-33492aaf75d3" />*/}
+                {/*                                        </div>*/}
+                {/*                                        <div className="content">*/}
+                {/*                                            <h4>Air Force 1 "07 LV8"Kings Sneakers</h4>*/}
+                {/*                                            <a>Đặt ngay</a>*/}
+                {/*                                            </div>*/}
+                {/*                                    </figure>*/}
+                {/*                                </div>*/}
+                {/*                            </div>*/}
+                {/*                        </div>*/}
+                {/*                        <div*/}
+                {/*                            className="tab-pane fade"*/}
+                {/*                            id="breakfast"*/}
+                {/*                            role="tabpanel"*/}
+                {/*                            aria-labelledby="breakfast-items"*/}
+                {/*                        >*/}
+                {/*                            <div className="row">*/}
+                {/*                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12">*/}
+                {/*                                    <figure>*/}
+                {/*                                        <div className="images">*/}
+                {/*                                            <img src="assets/images/menu/4.jpg" />*/}
+                {/*                                        </div>*/}
+                {/*                                        <div className="content">*/}
+                {/*                                            <h4>Spicy Clup</h4>*/}
+                {/*                                            <p>*/}
+                {/*                                                Pork, chicken and vegetable fried rolls served with*/}
+                {/*                                                lettuce wraps*/}
+                {/*                                            </p>*/}
+                {/*                                            <a>order now</a>*/}
+                {/*                                        </div>*/}
+                {/*                                    </figure>*/}
+                {/*                                </div>*/}
+                {/*                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12">*/}
+                {/*                                    <figure>*/}
+                {/*                                        <div className="images">*/}
+                {/*                                            <img src="assets/images/menu/5.jpg" />*/}
+                {/*                                        </div>*/}
+                {/*                                        <div className="content">*/}
+                {/*                                            <h4>Tuscan Flatbread</h4>*/}
+                {/*                                            <p>*/}
+                {/*                                                Pork, chicken and vegetable fried rolls served with*/}
+                {/*                                                lettuce wraps*/}
+                {/*                                            </p>*/}
+                {/*                                            <a>order now</a>*/}
+                {/*                                        </div>*/}
+                {/*                                    </figure>*/}
+                {/*                                </div>*/}
+                {/*                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12">*/}
+                {/*                                    <figure>*/}
+                {/*                                        <div className="images">*/}
+                {/*                                            <img src="assets/images/menu/6.jpg" />*/}
+                {/*                                        </div>*/}
+                {/*                                        <div className="content">*/}
+                {/*                                            <h4>Almond Baked Brie</h4>*/}
+                {/*                                            <p>*/}
+                {/*                                                Pork, chicken and vegetable fried rolls served with*/}
+                {/*                                                lettuce wraps*/}
+                {/*                                            </p>*/}
+                {/*                                            <a>order now</a>*/}
+                {/*                                        </div>*/}
+                {/*                                    </figure>*/}
+                {/*                                </div>*/}
+                {/*                            </div>*/}
+                {/*                        </div>*/}
+                {/*                        <div*/}
+                {/*                            className="tab-pane fade"*/}
+                {/*                            id="lunch"*/}
+                {/*                            role="tabpanel"*/}
+                {/*                            aria-labelledby="lunch-items"*/}
+                {/*                        >*/}
+                {/*                            <div className="row">*/}
+                {/*                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12">*/}
+                {/*                                    <figure>*/}
+                {/*                                        <div className="images">*/}
+                {/*                                            <img src="assets/images/menu/4.jpg" />*/}
+                {/*                                        </div>*/}
+                {/*                                        <div className="content">*/}
+                {/*                                            <h4>Spicy Clup</h4>*/}
+                {/*                                            <p>*/}
+                {/*                                                Pork, chicken and vegetable fried rolls served with*/}
+                {/*                                                lettuce wraps*/}
+                {/*                                            </p>*/}
+                {/*                                            <a>order now</a>*/}
+                {/*                                        </div>*/}
+                {/*                                    </figure>*/}
+                {/*                                </div>*/}
+                {/*                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12">*/}
+                {/*                                    <figure>*/}
+                {/*                                        <div className="images">*/}
+                {/*                                            <img src="assets/images/menu/5.jpg" />*/}
+                {/*                                        </div>*/}
+                {/*                                        <div className="content">*/}
+                {/*                                            <h4>Spicy Clup</h4>*/}
+                {/*                                            <p>*/}
+                {/*                                                Pork, chicken and vegetable fried rolls served with*/}
+                {/*                                                lettuce wraps*/}
+                {/*                                            </p>*/}
+                {/*                                            <a>order now</a>*/}
+                {/*                                        </div>*/}
+                {/*                                    </figure>*/}
+                {/*                                </div>*/}
+                {/*                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12">*/}
+                {/*                                    <figure>*/}
+                {/*                                        <div className="images">*/}
+                {/*                                            <img src="assets/images/menu/6.jpg" />*/}
+                {/*                                        </div>*/}
+                {/*                                        <div className="content">*/}
+                {/*                                            <h4>Spicy Clup</h4>*/}
+                {/*                                            <p>*/}
+                {/*                                                Pork, chicken and vegetable fried rolls served with*/}
+                {/*                                                lettuce wraps*/}
+                {/*                                            </p>*/}
+                {/*                                            <a>order now</a>*/}
+                {/*                                        </div>*/}
+                {/*                                    </figure>*/}
+                {/*                                </div>*/}
+                {/*                            </div>*/}
+                {/*                        </div>*/}
+                {/*                        <div*/}
+                {/*                            className="tab-pane fade"*/}
+                {/*                            id="dinner"*/}
+                {/*                            role="tabpanel"*/}
+                {/*                            aria-labelledby="dinner-item"*/}
+                {/*                        >*/}
+                {/*                            <div className="row">*/}
+                {/*                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12">*/}
+                {/*                                    <figure>*/}
+                {/*                                        <div className="images">*/}
+                {/*                                            <img src="assets/images/menu/4.jpg" />*/}
+                {/*                                        </div>*/}
+                {/*                                        <div className="content">*/}
+                {/*                                            <h4>Spicy Clup</h4>*/}
+                {/*                                            <p>*/}
+                {/*                                                Pork, chicken and vegetable fried rolls served with*/}
+                {/*                                                lettuce wraps*/}
+                {/*                                            </p>*/}
+                {/*                                            <a>order now</a>*/}
+                {/*                                        </div>*/}
+                {/*                                    </figure>*/}
+                {/*                                </div>*/}
+                {/*                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12">*/}
+                {/*                                    <figure>*/}
+                {/*                                        <div className="images">*/}
+                {/*                                            <img src="assets/images/menu/5.jpg" />*/}
+                {/*                                        </div>*/}
+                {/*                                        <div className="content">*/}
+                {/*                                            <h4>Spicy Clup</h4>*/}
+                {/*                                            <p>*/}
+                {/*                                                Pork, chicken and vegetable fried rolls served with*/}
+                {/*                                                lettuce wraps*/}
+                {/*                                            </p>*/}
+                {/*                                            <a>order now</a>*/}
+                {/*                                        </div>*/}
+                {/*                                    </figure>*/}
+                {/*                                </div>*/}
+                {/*                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12">*/}
+                {/*                                    <figure>*/}
+                {/*                                        <div className="images">*/}
+                {/*                                            <img src="assets/images/menu/6.jpg" />*/}
+                {/*                                        </div>*/}
+                {/*                                        <div className="content">*/}
+                {/*                                            <h4>Spicy Clup</h4>*/}
+                {/*                                            <p>*/}
+                {/*                                                Pork, chicken and vegetable fried rolls served with*/}
+                {/*                                                lettuce wraps*/}
+                {/*                                            </p>*/}
+                {/*                                            <a>order now</a>*/}
+                {/*                                        </div>*/}
+                {/*                                    </figure>*/}
+                {/*                                </div>*/}
+                {/*                            </div>*/}
+                {/*                        </div>*/}
+                {/*                        <div*/}
+                {/*                            className="tab-pane fade"*/}
+                {/*                            id="beverage"*/}
+                {/*                            role="tabpanel"*/}
+                {/*                            aria-labelledby="beverage-item"*/}
+                {/*                        >*/}
+                {/*                            <div className="row">*/}
+                {/*                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12">*/}
+                {/*                                    <figure>*/}
+                {/*                                        <div className="images">*/}
+                {/*                                            <img src="assets/images/menu/4.jpg" />*/}
+                {/*                                        </div>*/}
+                {/*                                        <div className="content">*/}
+                {/*                                            <h4>Almond Baked Brie</h4>*/}
+                {/*                                            <p>*/}
+                {/*                                                Pork, chicken and vegetable fried rolls served with*/}
+                {/*                                                lettuce wraps*/}
+                {/*                                            </p>*/}
+                {/*                                            <a>order now</a>*/}
+                {/*                                        </div>*/}
+                {/*                                    </figure>*/}
+                {/*                                </div>*/}
+                {/*                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12">*/}
+                {/*                                    <figure>*/}
+                {/*                                        <div className="images">*/}
+                {/*                                            <img src="assets/images/menu/5.jpg" />*/}
+                {/*                                        </div>*/}
+                {/*                                        <div className="content">*/}
+                {/*                                            <h4>Tuscan Flatbread</h4>*/}
+                {/*                                            <p>*/}
+                {/*                                                Pork, chicken and vegetable fried rolls served with*/}
+                {/*                                                lettuce wraps*/}
+                {/*                                            </p>*/}
+                {/*                                            <a>order now</a>*/}
+                {/*                                        </div>*/}
+                {/*                                    </figure>*/}
+                {/*                                </div>*/}
+                {/*                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12">*/}
+                {/*                                    <figure>*/}
+                {/*                                        <div className="images">*/}
+                {/*                                            <img src="assets/images/menu/6.jpg" />*/}
+                {/*                                        </div>*/}
+                {/*                                        <div className="content">*/}
+                {/*                                            <h4>Spicy Clup</h4>*/}
+                {/*                                            <p>*/}
+                {/*                                                Pork, chicken and vegetable fried rolls served with*/}
+                {/*                                                lettuce wraps*/}
+                {/*                                            </p>*/}
+                {/*                                            <a>order now</a>*/}
+                {/*                                        </div>*/}
+                {/*                                    </figure>*/}
+                {/*                                </div>*/}
+                {/*                            </div>*/}
+                {/*                        </div>*/}
+                {/*                    </div>*/}
+                {/*                </div>*/}
+                {/*            </div>*/}
+                {/*        </div>*/}
+                {/*    </div>*/}
+                {/*</section>*/}
             </main>
             {/* //////////////////////Main-End/////////////////////// */}
             {/* ====================================================== */}

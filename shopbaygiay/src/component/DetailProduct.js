@@ -6,7 +6,7 @@ import * as productService from "../service/ProductService";
 import {logDOM} from "@testing-library/react";
 import {formatPrice} from "../service/FormatService";
 import * as FormatService from "../service/FormatService";
-import {addToCart} from "../service/CartService";
+import {addToCart, sumProductInCart} from "../service/CartService";
 import * as CartService from "../service/CartService";
 import Swal from "sweetalert2";
 import {toast} from "react-toastify";
@@ -36,6 +36,7 @@ export function DetailProduct() {
 
     const findByAllIdProduct = async (id) => {
         const data = await productService.findByAllIdProduct(id);
+        console.log(data)
         setProduct(data);
     };
     const findBySizeIdProduct = async (id) => {
@@ -62,7 +63,6 @@ export function DetailProduct() {
             idProduct: product.id,
             idAccount: userId.id
         }
-        console.log(values)
 
         let status = await CartService.addToCart(values);
         console.log(status)
@@ -234,13 +234,19 @@ export function DetailProduct() {
                                 <div className="row">
                                     <dt className="col-4">Loại giày :</dt>
                                     <dd className="col-8">{product.typeProduct}</dd>
-                                    <dt className="col-4">Còn lại :</dt>
-                                    <dd className="col-8">{product.numberProduct} đôi</dd>
-                                    <dt className="col-4">Giá vận chuyển :</dt>
-                                    <dd className="col-8">đ
-                                        {product.shippingCost === 0 ? (<p>Miễn Phí vận
-                                            chuyển</p>) : (product.shippingCost && FormatService.formatPrice(product.shippingCost))}
-                                    </dd>
+                                    {product.numberProduct === 0 ? (
+                                        <dt className="col-4">Đã hết hàng</dt>
+                                    ):(
+                                        <>
+                                            <dt className="col-4">Còn lại :</dt>
+                                            <dd className="col-8">{product.numberProduct} đôi</dd>
+                                        </>
+                                    )}
+                                    {/*<dt className="col-4">Giá vận chuyển :</dt>*/}
+                                    {/*<dd className="col-8">đ*/}
+                                    {/*    {product.shippingCost === 0 ? (<p>Miễn Phí vận*/}
+                                    {/*        chuyển</p>) : (product.shippingCost && FormatService.formatPrice(product.shippingCost))}*/}
+                                    {/*</dd>*/}
                                 </div>
                                 <hr/>
                                 <div className="row mb-4">
@@ -322,13 +328,19 @@ export function DetailProduct() {
                                 {/*    {" "}*/}
                                 {/*    Buy now{" "}*/}
                                 {/*</a>*/}
-                                <button onClick={addToCart} style={{width: "40%", display: "flex"}}
-                                        className="btn btn-dark shadow-0">
-                                    {" "}
-                                    <i style={{color: "white", marginTop: "4%"}}
-                                       className="me-1 fa fa-shopping-basket"/> <p
-                                    style={{color: "white", marginTop: "3%"}}>Thêm vào giỏ hàng{" "}</p>
-                                </button>
+                                {product.numberProduct === 0 ? (
+                                    <h4 className="title text-dark">
+                                        Tiếc quá sản phẩm này đã hết mất rồi, bạn hãy chọn đôi khác nhé !
+                                    </h4>
+                                ):(
+                                    <button onClick={addToCart} style={{width: "40%", display: "flex"}}
+                                            className="btn btn-dark shadow-0">
+                                        {" "}
+                                        <i style={{color: "white", marginTop: "4%"}}
+                                           className="me-1 fa fa-shopping-basket"/> <p
+                                        style={{color: "white", marginTop: "3%"}}>Thêm vào giỏ hàng{" "}</p>
+                                    </button>
+                                )}
                             </div>
                         </main>
                     </div>

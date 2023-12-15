@@ -8,7 +8,7 @@ export const SearchProduct = () => {
     const [typeId, setTypeId] = useState("");
     const [product, setProduct] = useState([]);
     const [totalPages, setTotalPages] = useState(0);
-    const [limit, setLimit] = useState(3);
+    const [limit, setLimit] = useState(9);
     const searchNameFromHome = useParams().searchName;
 
     useEffect(() => {
@@ -16,9 +16,9 @@ export const SearchProduct = () => {
     }, [currentPage, searchNameFromHome]);
     const getAllProduct = async () => {
         if (searchNameFromHome) {
-            const res = await ProductService.getAllProduct(currentPage, limit, searchNameFromHome, typeId);
+            const res = await ProductService.getAllProduct(currentPage, limit, searchNameFromHome, typeId, "");
             setProduct(res.data.content);
-            setTotalPages(Math.ceil(res.data.totalElements / 3));
+            setTotalPages(Math.ceil(res.data.totalElements / 9));
         }
     }
     const handlePageClick = (event) => {
@@ -63,15 +63,14 @@ export const SearchProduct = () => {
                                                     {product.map(products => {
                                                         return (
                                                             <div
-
                                                                 className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12"
-                                                                key={products.id}>
+                                                                key={products.id} style={{margin:"0 0 -25% 0"}}>
                                                                 <figure>
                                                                     <Link to={`/detailProduct/${products.id}`}>
                                                                         <div className="images">
                                                                             <img src={products.image}/>
                                                                         </div>
-                                                                        <div className="content">
+                                                                        <div className="content" style={{margin:"40% 0 0 0"}}>
                                                                             <h4>{products.name}</h4>
                                                                             <Link to={`/detailProduct/${products.id}`}>Đặt
                                                                                 ngay</Link>

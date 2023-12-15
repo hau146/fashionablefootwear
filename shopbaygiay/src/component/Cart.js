@@ -12,6 +12,7 @@ import {PayPalButton} from "react-paypal-button-v2";
 import * as VoucherService from "../service/VoucherService";
 import {toast} from "react-toastify";
 import * as OrderProductDetailService from "../service/OrderProductDetailService";
+import * as productService from "../service/ProductService";
 
 export function Cart() {
     const navigate = useNavigate();
@@ -90,12 +91,19 @@ export function Cart() {
             setUserId(id.data);
         }
     }
-    const handleClickNumberIncrease = async (id) => {
-        const status = await CartService.increasingTheNumber(id)
-        if (status === 200) {
-            showCartById()
-            sumProductInCart();
-            totalPriceProductInCart(userId.id)
+    const handleClickNumberIncrease = async (id, idProduct, numberProduct) => {
+        const data = await productService.findByAllIdProduct(idProduct);
+        if (data.numberProduct === numberProduct) {
+            toast.warning(`Số lượng chọn vượt quá số giày còn lại, chỉ còn lại ${numberProduct} đôi`)
+        } else if (data.numberProduct === 0) {
+            toast.warning("Sảm phẩm này đã hết hàng, vui lòng xóa ra khỏi giỏ hàng")
+        } else {
+            const status = await CartService.increasingTheNumber(id)
+            if (status === 200) {
+                showCartById()
+                sumProductInCart();
+                totalPriceProductInCart(userId.id)
+            }
         }
     }
     const handleClickNumberReduce = async (id) => {
@@ -145,6 +153,7 @@ export function Cart() {
     }
     const vnPayOnclick = async (pricePay) => {
         const link = await CartService.checkVnPay(pricePay);
+        window.close();
         window.location.href = link;
     }
     const successPay = async (idDetailOrderStatus) => {
@@ -179,7 +188,15 @@ export function Cart() {
         }
     }
 
-    const handleCheckboxChange = async (id, priceProduct, numberProduct) => {
+    const handleCheckboxChange = async (id, priceProduct, numberProduct, idProduct) => {
+        const data = await productService.findByAllIdProduct(idProduct);
+        if (data.numberProduct === numberProduct) {
+            toast.warning(`Số lượng chọn vượt quá số giày còn lại, chỉ còn lại ${numberProduct} đôi`)
+            return
+        } else if (data.numberProduct === 0) {
+            toast.warning("Sảm phẩm này đã hết hàng, vui lòng xóa ra khỏi giỏ hàng")
+            return
+        }
         const status = await CartService.selectPay(id)
         if (status === 200) {
             if (userId.rankAccount.id === 2) {
@@ -279,9 +296,12 @@ export function Cart() {
                                                                         <div
                                                                             className="d-flex flex-row align-items-center">
                                                                             <div style={{margin: "0 3% 0 -12%"}}>
-                                                                                <input
-                                                                                    onChange={() => handleCheckboxChange(carts.id, carts.priceProduct, carts.numberProduct)}
-                                                                                    type="checkbox"/>
+                                                                                {carts.numberProduct === 0 ? null : (
+                                                                                    <input
+                                                                                        onChange={() => handleCheckboxChange(carts.id, carts.priceProduct, carts.numberProduct, carts.idProduct)}
+                                                                                        type="checkbox"/>
+                                                                                )}
+
                                                                             </div>
                                                                             <div>
                                                                                 <img
@@ -332,7 +352,7 @@ export function Cart() {
                                                                                        disabled
                                                                                        className="form-control form-control-sm"/>
                                                                                 <button className="btn btn-link px-2"
-                                                                                        onClick={() => handleClickNumberIncrease(carts.id)}>
+                                                                                        onClick={() => handleClickNumberIncrease(carts.id, carts.idProduct, carts.numberProduct)}>
                                                                                     <i style={{color: "black"}}
                                                                                        className="fas fa-plus"></i>
 

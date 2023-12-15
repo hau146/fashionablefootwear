@@ -1,13 +1,14 @@
 import {Link, useNavigate} from "react-router-dom";
 import "../css/avatar.css"
 import "../css/inputSearch.css"
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import Swal from "sweetalert2";
 import * as AccountService from "../service/AccountService";
 import {BiCog, BiLogOutCircle, BiUserCircle} from "react-icons/bi";
 import {getIdByUserName} from "../service/AccountService";
 import {sumProductInCart} from "../service/CartService";
 import * as CartService from "../service/CartService";
+import {CartContext, useCart} from "./Context";
 
 export function Header() {
     const navigate = useNavigate();
@@ -20,6 +21,9 @@ export function Header() {
     const [sumCart, setSumCart] = useState(0);
     const member = AccountService.checkRollAppUser("ROLE_MEMBER");
     const admin = AccountService.checkRollAppUser("ADMIN");
+    // const cartContext = useContext(CartContext);
+    // const {cartState} = cartContext;
+    // console.log(cartState.cartItem.length)
 
     const getUserName = async () => {
         const result = await AccountService.infoAppUserByJwtToken();
@@ -38,12 +42,12 @@ export function Header() {
         setSumCart(data)
     }
 
-    // useEffect(() => {
-    //     const JwtToken = AccountService.infoAppUserByJwtToken();
-    //     if (JwtToken) {
-    //         navigate(-1);
-    //     }
-    // }, []);
+    useEffect(() => {
+        const JwtToken = AccountService.infoAppUserByJwtToken();
+        if (JwtToken) {
+            navigate(-1);
+        }
+    }, []);
     useEffect(() => {
         getUserName();
     }, []);
@@ -51,7 +55,7 @@ export function Header() {
     useEffect(() => {
         getAppUserId();
         sumProductInCart();
-    }, [sumCart])
+    },[])
 
     const handleLogout = async () => {
         localStorage.removeItem("JWT");
@@ -182,15 +186,15 @@ export function Header() {
                     </div>
                     <div className="social-media">
                         <ul style={{marginBottom: "-2rem"}}>
-                            {JwtToken && member  ? (
+                            {JwtToken && member ? (
                                 <>
-                                    {sumCart < 1 ? (
+                                    {sumCart === 0 ? (
                                         <>
                                             <li style={{color: "#37da11"}} onClick={() => handleCartClick(userId.id)}>
                                                 <i style={{fontSize: "165%"}} className="fa-solid fa-cart-shopping">
                                         <span style={{fontSize: "11px", margin: "5px 0px 0px -13%"}}
                                               className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                                0
+                                                 0
                                             <span className="visually-hidden">unread messages</span>
                                 </span>
                                                 </i>

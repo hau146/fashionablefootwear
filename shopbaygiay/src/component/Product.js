@@ -15,9 +15,10 @@ export function Product() {
     const [records, setRecords] = useState("");
     const [currentPage, setCurrentPage] = useState(0);
     const [refresh, setRefresh] = useState(true);
-    const [limit, setLimit] = useState(3);
+    const [limit, setLimit] = useState(9);
     const [nameProduct, setNameProduct] = useState("");
     const [typeId, setTypeId] = useState("1");
+    const [typeSort, setTypeSort] = useState(0);
 
 
     useEffect(() => {
@@ -27,7 +28,7 @@ export function Product() {
     }, []);
     useEffect(() => {
         getAllProduct()
-    }, [nameProduct, typeProduct, currentPage, typeId]);
+    }, [nameProduct, typeProduct, currentPage, typeId, typeSort]);
     const getAllSize = async () => {
         const data = await SizeService.getAllSize();
         setSize(data);
@@ -41,10 +42,10 @@ export function Product() {
         setTypeProduct(data);
     }
     const getAllProduct = async () => {
-        const res = await ProductService.getAllProduct(currentPage, limit, nameProduct, typeId);
+        const res = await ProductService.getAllProduct(currentPage, limit, nameProduct, typeId, typeSort);
         setProduct(res.data.content);
         setRecords(res.data.size);
-        setTotalPages(Math.ceil(res.data.totalElements / 3));
+        setTotalPages(Math.ceil(res.data.totalElements / 9));
     }
 
     const handlePageClick = (event) => {
@@ -140,11 +141,14 @@ export function Product() {
                                         })}
                                     </ul>
                                     <div>
-                                        <select style={{width:"13%"}} className="form-select" aria-label="Default select example">
-                                            <option selected>Tìm theo</option>
+                                        <select style={{width:"18%"}} className="form-select" aria-label="Default select example"
+                                        onChange={(value) => setTypeSort(value.target.value)}
+                                        >
+                                            <option selected value="">Tìm theo</option>
                                             <option value="1">Giá thấp đến cao</option>
                                             <option value="2">Giá cao đến thấp</option>
-                                            {/*<option value="3">Three</option>*/}
+                                            <option value="3">Lượt mua thấp đến cao</option>
+                                            <option value="4">Lượt mua cao đến thấp</option>
                                         </select>
                                     </div>
 
@@ -160,13 +164,13 @@ export function Product() {
                                                 {product.map(products => {
                                                     return (
                                                         <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12"
-                                                             key={products.id}>
+                                                             key={products.id} style={{margin:"0 0 -25% 0"}}>
                                                             <figure>
                                                                 <Link to={`/detailProduct/${products.id}`}>
                                                                     <div className="images">
                                                                         <img src={products.image}/>
                                                                     </div>
-                                                                    <div className="content">
+                                                                    <div className="content" style={{margin:"40% 0 0 0"}}>
                                                                         <h4>{products.name}</h4>
                                                                         <div className="wrapper">
                                                                             <div className="content"
@@ -207,27 +211,29 @@ export function Product() {
                                     {/*    </ul>*/}
                                     {/*</nav>*/}
 
-                                    <ReactPaginate
-                                        breakLabel="..."
-                                        nextLabel="sau >"
-                                        onPageChange={handlePageClick}
-                                        pageCount={totalPages}
-                                        forcePage={currentPage}
-                                        previousLabel="< trước"
-                                        renderOnZeroPageCount={false}
-                                        marginPagesDisplayed={1}
-                                        pageRangeDisplayed={3}
-                                        containerClassName={"pagination justify-content-center"}
-                                        previousClassName={"page-item"}
-                                        previousLinkClassName={"page-link"}
-                                        pageClassName={"page-item"}
-                                        pageLinkClassName={"page-link"}
-                                        nextClassName={"page-item"}
-                                        nextLinkClassName={"page-link"}
-                                        breakClassName={"page-item"}
-                                        breakLinkClassName={"page-link"}
-                                        activeClassName={"active"}
-                                    />
+                                    <div style={{margin: "20% 0 0 0"}}>
+                                        <ReactPaginate
+                                            breakLabel="..."
+                                            nextLabel="sau >"
+                                            onPageChange={handlePageClick}
+                                            pageCount={totalPages}
+                                            forcePage={currentPage}
+                                            previousLabel="< trước"
+                                            renderOnZeroPageCount={false}
+                                            marginPagesDisplayed={1}
+                                            pageRangeDisplayed={3}
+                                            containerClassName={"pagination justify-content-center"}
+                                            previousClassName={"page-item"}
+                                            previousLinkClassName={"page-link"}
+                                            pageClassName={"page-item"}
+                                            pageLinkClassName={"page-link"}
+                                            nextClassName={"page-item"}
+                                            nextLinkClassName={"page-link"}
+                                            breakClassName={"page-item"}
+                                            breakLinkClassName={"page-link"}
+                                            activeClassName={"active"}
+                                        />
+                                    </div>
 
                                 </div>
                             </div>

@@ -37,6 +37,7 @@ export function Profile(){
                            </div>
                            <b className="fs-6">Xin chào, {userId.name}</b>
                            {userId && userId.rankAccount.id !== 1 ? (<p className="fw-bold mb-2 fs-1">Thành viên {userId && userId.rankAccount.name}</p>): null}
+                           {userId && userId.rankAccount.id === 1 ? (<p>Hãy mua thêm những đôi giày tuyệt đẹp để nhận ưu đãi từ shop nhé!</p>): null}
                            {userId && userId.rankAccount.id === 2 ? (<p>Bạn được giảm 10% cho mọi đơn hàng</p>): null}
                            {userId && userId.rankAccount.id === 3 ? (<p>Bạn được giảm 15% cho mọi đơn hàng</p>): null}
                            <ul>

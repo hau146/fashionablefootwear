@@ -20,6 +20,7 @@ export function ProductList() {
     const [limit, setLimit] = useState(5);
     const [nameProduct, setNameProduct] = useState("");
     const [typeId, setTypeId] = useState("");
+    const [typeSort, setTypeSort] = useState(0);
 
 
     useEffect(() => {
@@ -44,7 +45,7 @@ export function ProductList() {
         setTypeProduct(data);
     }
     const getAllProduct = async () => {
-        const res = await ProductService.getAllProduct(currentPage, limit, nameProduct, typeId);
+        const res = await ProductService.getAllProduct(currentPage, limit, nameProduct, typeId ,typeSort);
         setProduct(res.data.content);
         setRecords(res.data.size);
         setTotalPages(Math.ceil(res.data.totalElements / 5));
