@@ -190,7 +190,7 @@ export function Cart() {
 
     const handleCheckboxChange = async (id, priceProduct, numberProduct, idProduct) => {
         const data = await productService.findByAllIdProduct(idProduct);
-        if (data.numberProduct === numberProduct) {
+        if (data.numberProduct < numberProduct) {
             toast.warning(`Số lượng chọn vượt quá số giày còn lại, chỉ còn lại ${numberProduct} đôi`)
             return
         } else if (data.numberProduct === 0) {
@@ -301,7 +301,6 @@ export function Cart() {
                                                                                         onChange={() => handleCheckboxChange(carts.id, carts.priceProduct, carts.numberProduct, carts.idProduct)}
                                                                                         type="checkbox"/>
                                                                                 )}
-
                                                                             </div>
                                                                             <div>
                                                                                 <img

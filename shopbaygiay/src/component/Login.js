@@ -4,6 +4,7 @@ import {Link, useNavigate} from "react-router-dom";
 import * as AccountService from "../service/AccountService";
 import {Field, Form, Formik} from "formik";
 import Swal from "sweetalert2";
+import {Header} from "./Header";
 
 export function Login() {
     const navigate = useNavigate();
@@ -24,8 +25,8 @@ export function Login() {
                     showConfirmButton: false,
                     timer: 1300
                 });
-                navigate(`/`);
-                window.location.reload();
+                navigate("/");
+                window.location.reload()
             }
         } catch (err) {
             Swal.fire({

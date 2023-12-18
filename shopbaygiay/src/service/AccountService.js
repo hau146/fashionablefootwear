@@ -34,6 +34,16 @@ export const checkRollAppUser = (roleName) => {
     }
 }
 
+export const editProfile = async (values) => {
+    console.log(values)
+    try {
+        const result = await axios.patch(`http://localhost:8080/api/public/account/edit`, values);
+        return result.status;
+    } catch (error){
+        console.log(error);
+    }
+}
+
 // export const checkIdCustomers = async (id) => {
 //     try {
 //         const result = await axios.get(`http://localhost:8080/api/user/${id}`);
