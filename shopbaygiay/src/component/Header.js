@@ -8,7 +8,7 @@ import {BiCog, BiLogOutCircle, BiUserCircle} from "react-icons/bi";
 import {getIdByUserName} from "../service/AccountService";
 import {sumProductInCart} from "../service/CartService";
 import * as CartService from "../service/CartService";
-import {CartContext, useCart} from "./Context";
+import MyContext from "./MyContext";
 
 export function Header() {
     const navigate = useNavigate();
@@ -21,9 +21,9 @@ export function Header() {
     const [sumCart, setSumCart] = useState(0);
     const member = AccountService.checkRollAppUser("ROLE_MEMBER");
     const admin = AccountService.checkRollAppUser("ADMIN");
-    // const cartContext = useContext(CartContext);
-    // const {cartState} = cartContext;
-    // console.log(cartState.cartItem.length)
+
+    const {valueFromChild} = useContext(MyContext);
+
 
     const getUserName = async () => {
         const result = await AccountService.infoAppUserByJwtToken();
@@ -44,7 +44,7 @@ export function Header() {
 
     useEffect(() => {
         const JwtToken = AccountService.infoAppUserByJwtToken();
-        if (JwtToken) {
+        if (!JwtToken) {
             navigate(-1);
         }
     }, []);
@@ -55,7 +55,7 @@ export function Header() {
     useEffect(() => {
         getAppUserId();
         sumProductInCart();
-    },[])
+    }, [valueFromChild])
 
     const handleLogout = async () => {
         localStorage.removeItem("JWT");
@@ -88,16 +88,6 @@ export function Header() {
         });
     }
 
-    const handleInputChange = (event) => {
-        setNameProduct(event.target.value);
-    }
-    // const handleProduct = (nameProduct) => {
-    //     navigate(`/home/search/${nameProduct}`);
-    // }
-    // const handleSearch = (event) => {
-    //     event.preventDefault();
-    //     handleProduct(nameProduct);
-    // }
     const handleSearchInput = (event) => {
         if (event.key === 'Enter' && nameProduct !== "") {
             navigate(`/searchProduct/${nameProduct}`)

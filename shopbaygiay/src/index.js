@@ -24,10 +24,14 @@ import Authentication from "./component/config/Authentication";
 import AuthorOfCustomer from "./component/config/AuthorOfCustomer";
 import Error from "./component/config/Error";
 import {Profile} from "./component/Profile";
+import {FootMeasure} from "./component/FootMeasure";
+import MyProvider from "./component/MyProvider";
+import {Statistical} from "./component/Statistical";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
       <BrowserRouter>
+          <MyProvider>
           <Header/>
           <Routes>
               <Route path="/" element={<MainPage/>}></Route>
@@ -39,6 +43,7 @@ root.render(
               <Route path="/detailProduct/:id" element={<DetailProduct/>}></Route>
               <Route path="/product" element={<Product/>}></Route>
               <Route path="/403" element={<Error/>}></Route>
+              <Route path="/1" element={<Statistical/>}></Route>
 
               <Route element={
                   <Authentication
@@ -60,7 +65,9 @@ root.render(
 
               </Route>
       </Routes>
+          <FootMeasure/>
           <Footer/>
+          </MyProvider>
           <ToastContainer></ToastContainer>
       </BrowserRouter>
 

@@ -9,14 +9,19 @@ export const SearchProduct = () => {
     const [product, setProduct] = useState([]);
     const [totalPages, setTotalPages] = useState(0);
     const [limit, setLimit] = useState(9);
-    const searchNameFromHome = useParams().searchName;
+    const {searchName} = useParams();
 
     useEffect(() => {
-        getAllProduct()
-    }, [currentPage, searchNameFromHome]);
+        if(searchName === "`" || searchName === "``"){
+            setProduct(undefined)
+        } else {
+            getAllProduct()
+        }
+    }, [currentPage, searchName]);
     const getAllProduct = async () => {
-        if (searchNameFromHome) {
-            const res = await ProductService.getAllProduct(currentPage, limit, searchNameFromHome, typeId, "");
+        if (searchName) {
+            const res = await ProductService.getAllProduct(currentPage, limit, searchName, typeId, "");
+            console.log(res.data.content)
             setProduct(res.data.content);
             setTotalPages(Math.ceil(res.data.totalElements / 9));
         }
@@ -28,7 +33,7 @@ export const SearchProduct = () => {
 
     return (
         <div>
-            {searchNameFromHome ? (
+            {product !== undefined ? (
                 <div>
                     <section className="abt">
                         <div className="container">
@@ -47,7 +52,7 @@ export const SearchProduct = () => {
                     {/*</div>*/}
                     <section className="menu-items">
                         <div className="container">
-                            <div className="row">
+                            <div className="row" style={{margin:"3% 0 20% 0"}}>
                                 <div className="col-12">
                                 </div>
                                 <div className="col-12">
@@ -68,10 +73,10 @@ export const SearchProduct = () => {
                                                                 <figure>
                                                                     <Link to={`/detailProduct/${products.id}`}>
                                                                         <div className="images">
-                                                                            <img src={products.image}/>
+                                                                            <img style={{height:"500px", width:"100%"}} src={products.image}/>
                                                                         </div>
-                                                                        <div className="content" style={{margin:"40% 0 0 0"}}>
-                                                                            <h4>{products.name}</h4>
+                                                                        <div className="content" style={{margin:"44% 0 0 0"}}>
+                                                                            <h4 style={{display:"block"}}>{products.name}</h4>
                                                                             <Link to={`/detailProduct/${products.id}`}>Đặt
                                                                                 ngay</Link>
                                                                         </div>
@@ -86,27 +91,29 @@ export const SearchProduct = () => {
                                             </div>
                                         </div>
 
-                                        <ReactPaginate
-                                            breakLabel="..."
-                                            nextLabel="sau >"
-                                            onPageChange={handlePageClick}
-                                            pageCount={totalPages}
-                                            forcePage={currentPage}
-                                            previousLabel="< trước"
-                                            renderOnZeroPageCount={false}
-                                            marginPagesDisplayed={1}
-                                            pageRangeDisplayed={3}
-                                            containerClassName={"pagination justify-content-center"}
-                                            previousClassName={"page-item"}
-                                            previousLinkClassName={"page-link"}
-                                            pageClassName={"page-item"}
-                                            pageLinkClassName={"page-link"}
-                                            nextClassName={"page-item"}
-                                            nextLinkClassName={"page-link"}
-                                            breakClassName={"page-item"}
-                                            breakLinkClassName={"page-link"}
-                                            activeClassName={"active"}
-                                        />
+                                        <div style={{margin:"21% 0 0 0"}}>
+                                            <ReactPaginate
+                                                breakLabel="..."
+                                                nextLabel="sau >"
+                                                onPageChange={handlePageClick}
+                                                pageCount={totalPages}
+                                                forcePage={currentPage}
+                                                previousLabel="< trước"
+                                                renderOnZeroPageCount={false}
+                                                marginPagesDisplayed={1}
+                                                pageRangeDisplayed={3}
+                                                containerClassName={"pagination justify-content-center"}
+                                                previousClassName={"page-item"}
+                                                previousLinkClassName={"page-link"}
+                                                pageClassName={"page-item"}
+                                                pageLinkClassName={"page-link"}
+                                                nextClassName={"page-item"}
+                                                nextLinkClassName={"page-link"}
+                                                breakClassName={"page-item"}
+                                                breakLinkClassName={"page-link"}
+                                                activeClassName={"active"}
+                                            />
+                                        </div>
 
                                     </div>
                                 </div>
@@ -115,10 +122,18 @@ export const SearchProduct = () => {
                     </section>
                 </div>
             ) : (
-                <div className="wrapper">
-                    <div className="content">
-                        <h3 style={{textAlign: "center"}}>Không có đôi giày bạn cần tìm, vui lòng nhập lại</h3>
-                    </div>
+                <div>
+                    <section className="abt">
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-12">
+                                    <div className="wrapper">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <h2 style={{textAlign:"center", margin:"5% 0"}}>Không có đôi giày bạn cần tìm, vui lòng nhập lại!</h2>
                 </div>
             )}
         </div>

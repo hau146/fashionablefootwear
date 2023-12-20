@@ -1,7 +1,7 @@
 import {Link, useNavigate, useParams} from "react-router-dom";
 import "../css/profile.css"
 import "../css/radioPay.css"
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import * as CartService from "../service/CartService";
 import ReactPaginate from "react-paginate";
 import * as FormatService from "../service/FormatService";
@@ -13,6 +13,7 @@ import * as VoucherService from "../service/VoucherService";
 import {toast} from "react-toastify";
 import * as OrderProductDetailService from "../service/OrderProductDetailService";
 import * as productService from "../service/ProductService";
+import MyContext from "./MyContext";
 
 export function Cart() {
     const navigate = useNavigate();
@@ -33,16 +34,22 @@ export function Cart() {
     const [inputValueVoucher, setInputValueVoucher] = useState('');
     const [totalPricePay, setTotalPricePay] = useState(0)
     const [tempTotalPricePay, setTempTotalPricePay] = useState(0)
+    const [priceVoucher, setPriceVoucher] = useState(0)
+    const { callFunctionFromChild } = useContext(MyContext);
+
 
 
     useEffect(() => {
         getAppUserId();
         sumProductInCart();
     }, [])
+    // useEffect(() => {
+    //     setPriceIfTrue(cart)
+    // }, [records, totalPages])
     useEffect(() => {
         showCartById()
-        totalPriceProductInCart(userId.id)
-    }, [currentPage, id, totalPrice, totalPricePay, tempTotalPricePay]);
+        totalPriceProductInCart()
+    }, [currentPage, id]);
 
 
     const sumTotalPriceById = async () => {
@@ -70,7 +77,40 @@ export function Cart() {
         setCart(res.data.content);
         setRecords(res.data.size);
         setTotalPages(Math.ceil(res.data.totalElements / 3));
+
     }
+    // const setPriceIfTrue = async (data) => {
+    //     console.log(data);
+    //     data.map((item, index) => {
+    //         if (item.selectPay === true) {
+    //             console.log("++++++++++++++++");
+    //             console.log(index);
+    //             console.log(item);
+    //             // setTotalPrice(totalPrice + (item.priceProduct * item.numberProduct));
+    //         }
+    //     });
+    // }
+
+    // const setPriceIfTrue = (data) => {
+    //     for (let i = 0; i < data.length; i++) {
+    //         if (data[i].selectPay === true) {
+    //             console.log(i)
+    //             if (userId.rankAccount.id === 2) {
+    //                 setTotalPrice(totalPrice + (data[i].priceProduct * data[i].numberProduct));
+    //                 setTotalPricePay((totalPrice + (data[i].priceProduct * data[i].numberProduct)) - ((totalPrice + (data[i].priceProduct * data[i].numberProduct)) * 0.10))
+    //             } else if (userId.rankAccount.id === 3) {
+    //                 setTotalPrice(totalPrice + (data[i].priceProduct * data[i].numberProduct));
+    //                 setTotalPricePay((totalPrice + (data[i].priceProduct * data[i].numberProduct)) - ((totalPrice + (data[i].priceProduct * data[i].numberProduct)) * 0.15))
+    //             } else {
+    //                 setTotalPrice(totalPrice + (data[i].priceProduct * data[i].numberProduct));
+    //                 setTotalPricePay(totalPrice + (data[i].priceProduct * data[i].numberProduct))
+    //             }
+    //             console.log(totalPrice + (data[i].priceProduct * data[i].numberProduct))
+    //         }
+    //     }
+    // }
+
+
     const handlePageClick = (event) => {
         setCurrentPage(+event.selected);
     };
@@ -78,11 +118,18 @@ export function Cart() {
         const data = await CartService.sumProductInCart();
         setSumCart(data)
     }
-    const totalPriceProductInCart = async (id) => {
+    const totalPriceProductInCart = async () => {
         const data = await CartService.totalPrice(id);
-        // setTotalPrice(data);
-        // setTotalPricePay(data)
-        // setTempTotalPricePay(data)
+        if (userId && userId.rankAccount.id === 2) {
+            setTotalPrice(data);
+            setTotalPricePay(data - (data * 0.10))
+        } else if (userId && userId.rankAccount.id === 3) {
+            setTotalPrice(data);
+            setTotalPricePay(data - (data * 0.15))
+        } else {
+            setTotalPrice(data);
+            setTotalPricePay(data)
+        }
     }
     const getAppUserId = async () => {
         const isLoggedIn = AccountService.infoAppUserByJwtToken();
@@ -134,6 +181,9 @@ export function Cart() {
             if (totalPrice === 0) {
                 toast.warning(`Vui lòng chọn sản phẩm rồi sau đó mới áp voucher`)
             } else {
+                if(priceVoucher){
+                    setTotalPricePay(totalPricePay + priceVoucher)
+                }
                 await setVoucherUser(data);
                 toast.success(`Sử dụng voucher thành công`)
             }
@@ -141,8 +191,9 @@ export function Cart() {
         }
     };
     useEffect(() => {
+        // setTotalPrice(totalPricePay - voucherUser.discountMoney)
         setTotalPricePay(totalPricePay - voucherUser.discountMoney)
-        setTempTotalPricePay(totalPricePay - voucherUser.discountMoney)
+        setPriceVoucher(voucherUser.discountMoney)
     }, [voucherUser]);
     const alertErros = () => {
         Swal.fire({
@@ -153,6 +204,7 @@ export function Cart() {
     }
     const vnPayOnclick = async (pricePay) => {
         const link = await CartService.checkVnPay(pricePay);
+        successPay(1)
         window.close();
         window.location.href = link;
     }
@@ -189,14 +241,14 @@ export function Cart() {
     }
 
     const handleCheckboxChange = async (id, priceProduct, numberProduct, idProduct) => {
-        const data = await productService.findByAllIdProduct(idProduct);
-        if (data.numberProduct < numberProduct) {
-            toast.warning(`Số lượng chọn vượt quá số giày còn lại, chỉ còn lại ${numberProduct} đôi`)
-            return
-        } else if (data.numberProduct === 0) {
-            toast.warning("Sảm phẩm này đã hết hàng, vui lòng xóa ra khỏi giỏ hàng")
-            return
-        }
+        // const data = await productService.findByAllIdProduct(idProduct);
+        // if (data.numberProduct < numberProduct) {
+        //     toast.warning(`Số lượng chọn vượt quá số giày còn lại, chỉ còn lại ${numberProduct} đôi`)
+        //     return
+        // } else if (data.numberProduct === 0) {
+        //     toast.warning("Sảm phẩm này đã hết hàng, vui lòng xóa ra khỏi giỏ hàng")
+        //     return
+        // }
         const status = await CartService.selectPay(id)
         if (status === 200) {
             if (userId.rankAccount.id === 2) {
@@ -236,7 +288,10 @@ export function Cart() {
                 if (status === 200) {
                     await toast.success("Xóa thành công")
                     showCartById();
+                    sumProductInCart();
+                    totalPriceProductInCart()
                 }
+                callFunctionFromChild(Math.random())
             }
         });
 
@@ -296,8 +351,14 @@ export function Cart() {
                                                                         <div
                                                                             className="d-flex flex-row align-items-center">
                                                                             <div style={{margin: "0 3% 0 -12%"}}>
-                                                                                {carts.numberProduct === 0 ? null : (
+                                                                                {carts.selectPay === true ? (
                                                                                     <input
+                                                                                        defaultChecked={true}
+                                                                                        onChange={() => handleCheckboxChange(carts.id, carts.priceProduct, carts.numberProduct, carts.idProduct)}
+                                                                                        type="checkbox"/>
+                                                                                ) : (
+                                                                                    <input
+                                                                                        defaultChecked={false}
                                                                                         onChange={() => handleCheckboxChange(carts.id, carts.priceProduct, carts.numberProduct, carts.idProduct)}
                                                                                         type="checkbox"/>
                                                                                 )}

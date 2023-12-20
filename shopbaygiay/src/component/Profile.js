@@ -73,13 +73,14 @@ export function Profile() {
                     </div>
                 </div>
             </section>
+
             <div className="main-content" style={{marginLeft: "50px"}}>
                 {/*########################## Profile Starts Here ############################# */}
                 <div className="profile-head">
                     <div className="row vh-65">
                         <div className="col-xl-6 text-center mx-auto align-self-center ">
                             <div className="imgcover mb-4">
-                                <img src="https://i.pinimg.com/564x/52/17/c1/5217c1e69e722b93b3217b97f4b2a981.jpg"
+                                <img style={{margin:"0 0 0 30%"}} src="https://i.pinimg.com/564x/52/17/c1/5217c1e69e722b93b3217b97f4b2a981.jpg"
                                      className="rounded-pill bg-white p-2 shadow" alt=""/>
                             </div>
                             <b className="fs-6">Xin chào, {userId.name}</b>

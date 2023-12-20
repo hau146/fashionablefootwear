@@ -164,13 +164,13 @@ export function Product() {
                                                 {product.map(products => {
                                                     return (
                                                         <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12"
-                                                             key={products.id} style={{margin:"0 0 -25% 0"}}>
+                                                             key={products.id} style={{margin:"0 0 -20% 0"}}>
                                                             <figure>
                                                                 <Link to={`/detailProduct/${products.id}`}>
                                                                     <div className="images">
                                                                         <img src={products.image}/>
                                                                     </div>
-                                                                    <div className="content" style={{margin:"40% 0 0 0"}}>
+                                                                    <div className="content" style={{margin:"49% 0 0 0"}}>
                                                                         <h4>{products.name}</h4>
                                                                         <div className="wrapper">
                                                                             <div className="content"

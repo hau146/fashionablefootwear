@@ -11,6 +11,16 @@ export const showCartById = async (currentPage,limit,id) => {
         console.log("lỗi hàm showCartById");
     }
 }
+export const findProductInCartByIdToDetailProduct = async (id) => {
+    try {
+        let res = await axios.get(URL_CART + `/findProductInCartByIdToDetailProduct?id=${id}`);
+        return res.data;
+
+    } catch (e) {
+        console.log("lỗi hàm sumProductInCart");
+    }
+}
+
 export const sumProductInCart = async () => {
     try {
         let res = await axios.get(URL_CART + "/sumCart");

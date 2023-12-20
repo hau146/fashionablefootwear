@@ -1,14 +1,36 @@
 import axios from "axios";
 
 const URL_ORDER_PRODUCT_DETAIL = "http://localhost:8080/api/public/orderProductDetail"
+const URL_ORDER_PRODUCT = "http://localhost:8080/api/public/orderProduct"
 
-export const findAllById = async (currentPage,limit,id) => {
+export const findAllByIdOrderProductDetail = async (currentPage, limit, idOrderProduct) => {
     try {
-        let res = await axios.get(URL_ORDER_PRODUCT_DETAIL + `/${id}` +`?page=${currentPage}&limit=${limit}`);
+        let res = await axios.get(URL_ORDER_PRODUCT_DETAIL + `/${idOrderProduct}` +`?page=${currentPage}&limit=${limit}`);
         return res;
 
     } catch (e) {
         console.log("lỗi hàm findAllById");
+    }
+}
+
+export const findAllOrderProductById = async (currentPage, limit, id) => {
+    try {
+        let res = await axios.get(URL_ORDER_PRODUCT + `/${id}` +`?page=${currentPage}&limit=${limit}`);
+        return res;
+
+    } catch (e) {
+        console.log("lỗi hàm findAllOrderProductById");
+    }
+}
+
+export const getStatistical = async () => {
+    try {
+        let res = await axios.get(URL_ORDER_PRODUCT + `/statistical`);
+        console.log(res.data)
+        return res.data;
+
+    } catch (e) {
+        console.log("lỗi hàm findAllOrderProductById");
     }
 }
 

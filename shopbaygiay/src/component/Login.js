@@ -5,9 +5,12 @@ import * as AccountService from "../service/AccountService";
 import {Field, Form, Formik} from "formik";
 import Swal from "sweetalert2";
 import {Header} from "./Header";
+import {useContext} from "react";
+import MyContext from "./MyContext";
 
 export function Login() {
     const navigate = useNavigate();
+    const {callFunctionFromChild} = useContext(MyContext);
 
     const handleLogin = async (appUser) => {
         try {

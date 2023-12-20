@@ -6,10 +6,13 @@ import * as FormatService from "../service/FormatService";
 import ReactPaginate from "react-paginate";
 import moment from "moment";
 import * as AccountService from "../service/AccountService";
+import {findAllByIdOrderProductDetail, findAllOrderProductById} from "../service/OrderProductDetailService";
+
 export function HistoryPayCart() {
     const [totalPages, setTotalPages] = useState(0);
     const [records, setRecords] = useState("");
     const [orderProduct, setOrderProduct] = useState([]);
+    const [orderProductDetail, setOrderProductDetail] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
     const [limit, setLimit] = useState(4);
     const [userId, setUserId] = useState("");
@@ -17,18 +20,28 @@ export function HistoryPayCart() {
 
 
     useEffect(() => {
-        findAllById()
+        findAllOrderProductById()
     }, [id, currentPage]);
     useEffect(() => {
         getAppUserId();
     }, [])
 
-    const findAllById = async () => {
-        const res = await OrderProductDetailService.findAllById(currentPage, limit, id);
+    const findAllOrderProductById = async () => {
+        const res = await OrderProductDetailService.findAllOrderProductById(currentPage, limit, id);
         setOrderProduct(res.data.content);
         setRecords(res.data.size);
         setTotalPages(Math.ceil(res.data.totalElements / 4));
     }
+
+    const findAllByIdOrderProductDetail = async (idOrderProduct) => {
+        const res = await OrderProductDetailService.findAllByIdOrderProductDetail(currentPage, limit, idOrderProduct);
+        console.log(res.data.content);
+        console.log("+++++++++++++")
+        setOrderProductDetail(res.data.content);
+        setRecords(res.data.size);
+        setTotalPages(Math.ceil(res.data.totalElements / 4));
+    }
+
     const handlePageClick = (event) => {
         setCurrentPage(+event.selected);
     };
@@ -43,7 +56,6 @@ export function HistoryPayCart() {
             setUserId(id.data);
         }
     }
-
 
 
     return (
@@ -72,50 +84,42 @@ export function HistoryPayCart() {
                                     <thead className="thead-dark">
                                     <tr>
                                         <th>#</th>
-                                        <th>&nbsp;</th>
-                                        <th>Sản phẩm</th>
-                                        <th>Tổng giá</th>
-                                        <th style={{padding:"30px 1%"}}>Đã mua(Đôi)</th>
-                                        <th style={{textAlign:"center"}}>Tình trạng</th>
+                                        <th>Ngày đặt hàng</th>
+                                        <th>Tổng thanh toán</th>
+                                        <th style={{textAlign: "center"}}>Tình trạng</th>
                                         <th>&nbsp;</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {orderProduct.map((orderProducts, index) => {
-                                        return(
-                                            <tr className="alert" role="alert">
+                                    {orderProduct.map((orderProducts, index) => (
+                                        <>
+                                            <tr
+                                                className="alert"
+                                                role="alert"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#history"
+                                                onClick={() => findAllByIdOrderProductDetail(orderProducts.id)}
+                                                key={index}
+                                            >
                                                 <td>
-                                                    <label>
-                                                        {index+1}
-                                                    </label>
-                                                </td>
-                                                <td>
-                                                    <div className="img"
-                                                         style={{backgroundImage: `url(${orderProducts.image})`,borderRadius:"15%"}}/>
+                                                    <label>{index + 1}</label>
                                                 </td>
                                                 <td>
                                                     <div className="email">
-                                                        <span>{orderProducts.name} </span>
-                                                        <span style={{fontWeight:"bold", color:"black"}}>size:{orderProducts.sizeProduct}</span>
-                                                        <span style={{fontWeight:"bold", color:"black"}}>{orderProducts && formatDate(orderProducts.date)}</span>
+                                                        <span style={{fontWeight: "bold", color: "black"}}>
+                                                          {orderProducts && formatDate(orderProducts.date)}
+                                                        </span>
                                                     </div>
                                                 </td>
                                                 <td>đ{orderProducts && FormatService.formatPrice(orderProducts.totalPrice)}</td>
-                                                <td className="quantity">
-                                                    <div className="input-group">
-                                                        <input type="text" name="quantity"
-                                                               disabled
-                                                               className="quantity form-control input-number" defaultValue={orderProducts.numberProduct}
-                                                               min={1} max={100}/>
-                                                    </div>
-                                                </td>
-                                                <td style={{width:"30%"}}>
+                                                <td style={{width: "30%"}}>
                                                     {orderProducts.nameOrderStatus}
-                                                    <p style={{fontWeight:"bold", color:"black"}}>Nơi nhận: {userId.address}</p>
+                                                    <p style={{fontWeight: "bold", color: "black"}}>Nơi
+                                                        nhận: {userId.address}</p>
                                                 </td>
                                             </tr>
-                                        )
-                                    })}
+                                        </>
+                                    ))}
                                     </tbody>
                                 </table>
                                 <ReactPaginate
@@ -143,6 +147,84 @@ export function HistoryPayCart() {
                         </div>
                     </div>
                 </div>
+
+                <div className="modal fade" id="history" data-bs-backdrop="static" data-bs-keyboard="false"
+                     tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div className="modal-dialog">
+                        <div className="modal-content" style={{width: "220%", left: "-50%"}}>
+                            <div className="modal-header">
+                                <h1 className="modal-title fs-5" id="staticBackdropLabel">Chi tiết đơn hàng</h1>
+                                <button type="button" className="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div className="modal-body">
+                                <div className="row">
+                                    <div className="col-md-12">
+                                        <div className="table-wrap">
+                                            <table className="table">
+                                                <thead className="thead-dark">
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>&nbsp;</th>
+                                                    <th>Sản phẩm</th>
+                                                    <th>Tổng giá</th>
+                                                    <th style={{padding: "30px 1%"}}>Đã mua(Đôi)</th>
+                                                    <th>&nbsp;</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {orderProductDetail.map((orderProductDetails, index) => {
+                                                    return (
+                                                        <tr className="alert" role="alert" data-bs-toggle="modal"
+                                                            data-bs-target="#history">
+                                                            <td>
+                                                                <label>
+                                                                    {index + 1}
+                                                                </label>
+                                                            </td>
+                                                            <td>
+                                                                <div className="img"
+                                                                     style={{
+                                                                         backgroundImage: `url(${orderProductDetails.image})`,
+                                                                         borderRadius: "15%"
+                                                                     }}/>
+                                                            </td>
+                                                            <td>
+                                                                <div className="email">
+                                                                    <span>{orderProductDetails.name} </span>
+                                                                    <span style={{
+                                                                        fontWeight: "bold",
+                                                                        color: "black"
+                                                                    }}>size:{orderProductDetails.sizeProduct}</span>
+                                                                </div>
+                                                            </td>
+                                                            <td>đ{orderProductDetails && FormatService.formatPrice(orderProductDetails.totalPrice)}</td>
+                                                            <td className="quantity">
+                                                                <div className="input-group">
+                                                                    <input type="text" name="quantity"
+                                                                           disabled
+                                                                           className="quantity form-control input-number"
+                                                                           defaultValue={orderProductDetails.numberProduct}
+                                                                           min={1} max={100}/>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    )
+                                                })}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Đóng
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </section>
         </div>
     )

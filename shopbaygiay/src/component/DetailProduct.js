@@ -1,16 +1,14 @@
 import "../css/detailProduct.css"
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import {findByAllIdProduct, findByImageIdProduct, findBySizeIdProduct} from "../service/ProductService";
 import * as productService from "../service/ProductService";
-import {logDOM} from "@testing-library/react";
-import {formatPrice} from "../service/FormatService";
 import * as FormatService from "../service/FormatService";
-import {addToCart, sumProductInCart} from "../service/CartService";
 import * as CartService from "../service/CartService";
 import Swal from "sweetalert2";
 import {toast} from "react-toastify";
 import * as AccountService from "../service/AccountService";
+import MyContext from "./MyContext";
+
 
 export function DetailProduct() {
     const [product, setProduct] = useState({});
@@ -21,6 +19,9 @@ export function DetailProduct() {
     const [sizeToCart, setSizeToCart] = useState(37);
     const [numberToCart, setNumberToCart] = useState(1)
     const [userId, setUserId] = useState("");
+
+    //dùng để truyền dữ liệu từ context -> header
+    const {callFunctionFromChild} = useContext(MyContext);
 
 
     useEffect(() => {
@@ -63,7 +64,29 @@ export function DetailProduct() {
             idProduct: product.id,
             idAccount: userId.id
         }
-
+        const dataProduct = await CartService.findProductInCartByIdToDetailProduct(product.id)
+        console.log(dataProduct)
+        if (numberToCart + dataProduct.numberProduct > dataProduct.product.numberProduct) {
+            console.log(numberToCart + dataProduct.numberProduct)
+            console.log(dataProduct.product.numberProduct)
+            await Swal.fire({
+                position: "top-center",
+                icon: "error",
+                title: "Không thể tiếp tục thêm do vượt quá số lượng kho",
+                showConfirmButton: false,
+                timer: 1850
+            });
+            return
+        } else if (numberToCart < 1){
+            await Swal.fire({
+                position: "top-center",
+                icon: "error",
+                title: "Số lượng thêm vào phải lớn hơn 0",
+                showConfirmButton: false,
+                timer: 1850
+            });
+            return
+        }
         let status = await CartService.addToCart(values);
         console.log(status)
         if (status === 200) {
@@ -74,6 +97,7 @@ export function DetailProduct() {
                 showConfirmButton: false,
                 timer: 1300
             });
+            callFunctionFromChild(Math.random())
         } else {
             await Swal.fire({
                 position: "top-center",
@@ -87,8 +111,6 @@ export function DetailProduct() {
     const alertMax = async () => {
         await toast.warning("Số lượng chọn vượt quá số giày còn lại")
     }
-    console.log(numberToCart)
-    console.log(sizeToCart)
 
 
     if (!images) return null
@@ -124,7 +146,6 @@ export function DetailProduct() {
                                 {/*        src="https://i.pinimg.com/564x/51/0f/37/510f37fb7fbcfc79014a780f96699f2e.jpg"*/}
                                 {/*    />*/}
                                 {/*</a>*/}
-
 
                                 <div
                                     id="carouselExampleFade"
@@ -236,7 +257,7 @@ export function DetailProduct() {
                                     <dd className="col-8">{product.typeProduct}</dd>
                                     {product.numberProduct === 0 ? (
                                         <dt className="col-4">Đã hết hàng</dt>
-                                    ):(
+                                    ) : (
                                         <>
                                             <dt className="col-4">Còn lại :</dt>
                                             <dd className="col-8">{product.numberProduct} đôi</dd>
@@ -299,7 +320,7 @@ export function DetailProduct() {
                                                 aria-label="Example text with button addon"
                                                 aria-describedby="button-addon1"
                                             />
-                                            {numberToCart === product.numberProduct ?(
+                                            {numberToCart === product.numberProduct ? (
                                                 <button
                                                     className="btn btn-white border border-secondary px-3"
                                                     type="button"
@@ -309,7 +330,7 @@ export function DetailProduct() {
                                                 >
                                                     <i className="fas fa-plus"/>
                                                 </button>
-                                            ):(
+                                            ) : (
                                                 <button
                                                     className="btn btn-white border border-secondary px-3"
                                                     type="button"
@@ -332,7 +353,7 @@ export function DetailProduct() {
                                     <h4 className="title text-dark">
                                         Tiếc quá sản phẩm này đã hết mất rồi, bạn hãy chọn đôi khác nhé !
                                     </h4>
-                                ):(
+                                ) : (
                                     <button onClick={addToCart} style={{width: "40%", display: "flex"}}
                                             className="btn btn-dark shadow-0">
                                         {" "}
