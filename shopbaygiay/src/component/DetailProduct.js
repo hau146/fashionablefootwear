@@ -1,6 +1,6 @@
 import "../css/detailProduct.css"
 import {useContext, useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import * as productService from "../service/ProductService";
 import * as FormatService from "../service/FormatService";
 import * as CartService from "../service/CartService";
@@ -19,6 +19,7 @@ export function DetailProduct() {
     const [sizeToCart, setSizeToCart] = useState(37);
     const [numberToCart, setNumberToCart] = useState(1)
     const [userId, setUserId] = useState("");
+    const navigate = useNavigate();
 
     //dùng để truyền dữ liệu từ context -> header
     const {callFunctionFromChild} = useContext(MyContext);
@@ -58,34 +59,41 @@ export function DetailProduct() {
         }
     }
     const addToCart = async () => {
+        if(userId === ""){
+            navigate("/login")
+            return
+        }
         const values = {
             numberProduct: numberToCart,
             sizeProduct: sizeToCart,
             idProduct: product.id,
             idAccount: userId.id
         }
-        const dataProduct = await CartService.findProductInCartByIdToDetailProduct(product.id)
+        const dataProduct = await CartService.findProductInCartByIdToDetailProduct(product.id, userId.id)
+        console.log(userId)
         console.log(dataProduct)
-        if (numberToCart + dataProduct.numberProduct > dataProduct.product.numberProduct) {
-            console.log(numberToCart + dataProduct.numberProduct)
-            console.log(dataProduct.product.numberProduct)
-            await Swal.fire({
-                position: "top-center",
-                icon: "error",
-                title: "Không thể tiếp tục thêm do vượt quá số lượng kho",
-                showConfirmButton: false,
-                timer: 1850
-            });
-            return
-        } else if (numberToCart < 1){
-            await Swal.fire({
-                position: "top-center",
-                icon: "error",
-                title: "Số lượng thêm vào phải lớn hơn 0",
-                showConfirmButton: false,
-                timer: 1850
-            });
-            return
+        if(dataProduct.numberProduct > 0 && dataProduct.product.numberProduct >0){
+            if (numberToCart + dataProduct.numberProduct > dataProduct.product.numberProduct) {
+                console.log(numberToCart + dataProduct.numberProduct)
+                console.log(dataProduct.product.numberProduct)
+                await Swal.fire({
+                    position: "top-center",
+                    icon: "error",
+                    title: "Không thể tiếp tục thêm do vượt quá số lượng kho",
+                    showConfirmButton: false,
+                    timer: 1850
+                });
+                return
+            } else if (numberToCart < 1){
+                await Swal.fire({
+                    position: "top-center",
+                    icon: "error",
+                    title: "Số lượng thêm vào phải lớn hơn 0",
+                    showConfirmButton: false,
+                    timer: 1850
+                });
+                return
+            }
         }
         let status = await CartService.addToCart(values);
         console.log(status)
@@ -133,20 +141,6 @@ export function DetailProduct() {
                     <div className="row gx-5">
                         <aside className="col-lg-6">
                             <div className="border rounded-4 mb-3 d-flex justify-content-center">
-                                {/*<a*/}
-                                {/*    data-fslightbox="mygalley"*/}
-                                {/*    className="rounded-4"*/}
-                                {/*    target="_blank"*/}
-                                {/*    datatype="image"*/}
-                                {/*    href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big.webp"*/}
-                                {/*>*/}
-                                {/*    <img*/}
-                                {/*        style={{ maxWidth: "100%", maxHeight: "100vh", margin: "auto" }}*/}
-                                {/*        className="rounded-4 fit"*/}
-                                {/*        src="https://i.pinimg.com/564x/51/0f/37/510f37fb7fbcfc79014a780f96699f2e.jpg"*/}
-                                {/*    />*/}
-                                {/*</a>*/}
-
                                 <div
                                     id="carouselExampleFade"
                                     className="carousel slide carousel-fade "
@@ -178,28 +172,6 @@ export function DetailProduct() {
                                                     </div>
                                                 )
                                             })}
-
-                                            {/*<div className="carousel-item active ">*/}
-                                            {/*    <img*/}
-                                            {/*        className="rounded-4 fit"*/}
-                                            {/*        src="https://i.pinimg.com/564x/51/0f/37/510f37fb7fbcfc79014a780f96699f2e.jpg"*/}
-                                            {/*    />*/}
-                                            {/*</div>*/}
-                                            {/*<div className="carousel-item">*/}
-                                            {/*    <img*/}
-
-                                            {/*        className="rounded-4 fit"*/}
-                                            {/*        src="https://i.pinimg.com/564x/8b/ae/98/8bae9814346f9e92d305c3d206f4248c.jpg"*/}
-                                            {/*    />*/}
-                                            {/*</div>*/}
-                                            {/*<div className="carousel-item">*/}
-                                            {/*    <img*/}
-                                            {/*        className="rounded-4 fit"*/}
-                                            {/*        src="https://i.pinimg.com/736x/7d/c7/11/7dc71176060d31ac05b8578f8a8a5bc7.jpg"*/}
-                                            {/*    />*/}
-                                            {/*</div>*/}
-
-
                                             <button
                                                 className="carousel-control-prev"
                                                 type="button"

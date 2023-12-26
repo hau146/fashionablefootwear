@@ -34,6 +34,7 @@ export function HistoryPayCart() {
     }
 
     const findAllByIdOrderProductDetail = async (idOrderProduct) => {
+        console.log("idOrderProduct : " + idOrderProduct)
         const res = await OrderProductDetailService.findAllByIdOrderProductDetail(currentPage, limit, idOrderProduct);
         console.log(res.data.content);
         console.log("+++++++++++++")

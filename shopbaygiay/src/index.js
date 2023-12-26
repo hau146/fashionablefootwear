@@ -27,6 +27,7 @@ import {Profile} from "./component/Profile";
 import {FootMeasure} from "./component/FootMeasure";
 import MyProvider from "./component/MyProvider";
 import {Statistical} from "./component/Statistical";
+import {SuccessLogin} from "./component/SuccesLogin";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -44,6 +45,7 @@ root.render(
               <Route path="/product" element={<Product/>}></Route>
               <Route path="/403" element={<Error/>}></Route>
               <Route path="/1" element={<Statistical/>}></Route>
+              <Route path="/successlogin" element={<SuccessLogin/>}></Route>
 
               <Route element={
                   <Authentication

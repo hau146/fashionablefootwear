@@ -30,7 +30,7 @@ export function MainPage(){
                                         <p>
                                             Sẵn sàng cho mọi bước đi - Với giày từ shop chúng tôi!
                                         </p>
-                                        <a href="#">Đặt hàng ngay bây giờ</a>
+                                        <Link to={"/product"}>Đặt hàng ngay bây giờ</Link>
                                     </div>
                                 </div>
                                 <div className="carousel-item">
@@ -41,7 +41,7 @@ export function MainPage(){
                                         <p>
                                             Chọn Snaker - Chọn phong cách, chọn sự độc đáo.
                                         </p>
-                                        <a href="#">Đặt hàng ngay bây giờ</a>
+                                        <Link to={"/product"}>Đặt hàng ngay bây giờ</Link>
                                     </div>
                                 </div>
                                 <div className="carousel-item">
@@ -52,7 +52,7 @@ export function MainPage(){
                                         <p>
                                             Giày Snaker - Điểm nhấn hoàn hảo cho phong cách cá nhân.
                                         </p>
-                                        <a href="#">Đặt hàng ngay bây giờ</a>
+                                        <Link to={"/product"}>Đặt hàng ngay bây giờ</Link>
                                     </div>
                                 </div>
                             </div>

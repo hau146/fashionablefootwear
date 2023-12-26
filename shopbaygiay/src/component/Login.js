@@ -5,12 +5,19 @@ import * as AccountService from "../service/AccountService";
 import {Field, Form, Formik} from "formik";
 import Swal from "sweetalert2";
 import {Header} from "./Header";
-import {useContext} from "react";
+import {useContext, useEffect} from "react";
 import MyContext from "./MyContext";
 
 export function Login() {
     const navigate = useNavigate();
     const {callFunctionFromChild} = useContext(MyContext);
+
+    useEffect(() => {
+        const JwtToken = AccountService.infoAppUserByJwtToken();
+        if (JwtToken) {
+            navigate("/");
+        }
+    }, []);
 
     const handleLogin = async (appUser) => {
         try {
@@ -28,11 +35,12 @@ export function Login() {
                     showConfirmButton: false,
                     timer: 1300
                 });
+                // callFunctionFromChild(Math.random())
                 navigate("/");
                 window.location.reload()
             }
         } catch (err) {
-            Swal.fire({
+            await Swal.fire({
                 icon: 'error',
                 title: "Sai tài khoản hoặc mật khẩu"
             })
@@ -126,31 +134,31 @@ export function Login() {
                                         <button type="submit" className="btn btn-lg fw-bold fs-7 btn-success  w-100">
                                             Đăng nhập ngay
                                         </button>
-                                        <p className="text-center py-4 fw-bold fs-8">
-                                            Hoặc đăng nhập với các nền tảng xã hội
-                                        </p>
-                                        <ul className="d-inline-block mx-auto">
-                                            <li className="float-start px-3">
-                                                <a href="">
-                                                    <i className="bi bi-facebook"/>
-                                                </a>
-                                            </li>
-                                            <li className="float-start px-3">
-                                                <a href="">
-                                                    <i className="bi bi-twitter"/>
-                                                </a>
-                                            </li>
-                                            <li className="float-start px-3">
-                                                <a href="">
-                                                    <i className="bi bi-linkedin"/>
-                                                </a>
-                                            </li>
-                                            <li className="float-start px-3">
-                                                <a href="">
-                                                    <i className="bi bi-google"/>
-                                                </a>
-                                            </li>
-                                        </ul>
+                                        {/*<p className="text-center py-4 fw-bold fs-8">*/}
+                                        {/*    Hoặc đăng nhập với các nền tảng xã hội*/}
+                                        {/*</p>*/}
+                                        {/*<ul className="d-inline-block mx-auto">*/}
+                                        {/*    <li className="float-start px-3">*/}
+                                        {/*        <a href="">*/}
+                                        {/*            <i className="bi bi-facebook"/>*/}
+                                        {/*        </a>*/}
+                                        {/*    </li>*/}
+                                        {/*    <li className="float-start px-3">*/}
+                                        {/*        <a href="">*/}
+                                        {/*            <i className="bi bi-twitter"/>*/}
+                                        {/*        </a>*/}
+                                        {/*    </li>*/}
+                                        {/*    <li className="float-start px-3">*/}
+                                        {/*        <a href="">*/}
+                                        {/*            <i className="bi bi-linkedin"/>*/}
+                                        {/*        </a>*/}
+                                        {/*    </li>*/}
+                                        {/*    <li className="float-start px-3">*/}
+                                        {/*        <a href="">*/}
+                                        {/*            <i className="bi bi-google"/>*/}
+                                        {/*        </a>*/}
+                                        {/*    </li>*/}
+                                        {/*</ul>*/}
                                     </div>
                                 </div>
                             </div>

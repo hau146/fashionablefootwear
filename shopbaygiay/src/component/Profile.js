@@ -27,7 +27,8 @@ export function Profile() {
         }
     }
     const edit = async () => {
-        setEditInfo(true)
+        await setEditInfo(true)
+        await getAppUserId()
     }
     const initValue = {
         id: userId.id,
@@ -120,7 +121,7 @@ export function Profile() {
                                         <button type="button" onClick={() => setEditInfo(false)} role="button"
                                                 className="button-name">Lưu thay đổi</button>
                                 ) : (
-                                    <button role="button" onClick={() => setEditInfo(true)} className="button-name">Sửa thông
+                                    <button role="button" onClick={edit} className="button-name">Sửa thông
                                         tin</button>
                                 )}
                                 {/*<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ipsum sit nibh amet egestas tellus.</p>*/}

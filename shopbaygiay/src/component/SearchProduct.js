@@ -12,7 +12,7 @@ export const SearchProduct = () => {
     const {searchName} = useParams();
 
     useEffect(() => {
-        if(searchName === "`" || searchName === "``"){
+        if(searchName === "`" || searchName === "``" || searchName === "[" || searchName === "]" || searchName === "{" || searchName === "}" || searchName === "?"){
             setProduct(undefined)
         } else {
             getAllProduct()
@@ -45,12 +45,10 @@ export const SearchProduct = () => {
                             </div>
                         </div>
                     </section>
-                    {/*<div className="wrapper">*/}
-                    {/*    <div className="content">*/}
-                    {/*        <h3 style={{textAlign:"center"}}>Những đôi giày bạn tìm được</h3>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
                     <section className="menu-items">
+                        <div>
+                            <h1 style={{textAlign:"center", fontWeight:"bold"}}>Tìm được {product.length} đôi giày trong từ khóa "{searchName}"</h1>
+                        </div>
                         <div className="container">
                             <div className="row" style={{margin:"3% 0 20% 0"}}>
                                 <div className="col-12">

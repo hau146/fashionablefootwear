@@ -11,9 +11,9 @@ export const showCartById = async (currentPage,limit,id) => {
         console.log("lỗi hàm showCartById");
     }
 }
-export const findProductInCartByIdToDetailProduct = async (id) => {
+export const findProductInCartByIdToDetailProduct = async (id, idAccount) => {
     try {
-        let res = await axios.get(URL_CART + `/findProductInCartByIdToDetailProduct?id=${id}`);
+        let res = await axios.get(URL_CART + `/findProductInCartByIdToDetailProduct?id=${id}&idAccount=${idAccount}`);
         return res.data;
 
     } catch (e) {
@@ -21,9 +21,9 @@ export const findProductInCartByIdToDetailProduct = async (id) => {
     }
 }
 
-export const sumProductInCart = async () => {
+export const sumProductInCart = async (idAccount) => {
     try {
-        let res = await axios.get(URL_CART + "/sumCart");
+        let res = await axios.get(URL_CART + `/sumCart?idAccount=${idAccount}`);
         return res.data;
 
     } catch (e) {

@@ -38,20 +38,23 @@ export function Header() {
         }
     }
     const sumProductInCart = async () => {
-        const data = await CartService.sumProductInCart();
+        const data = await CartService.sumProductInCart(userId.id);
+        console.log(data)
         setSumCart(data)
     }
 
-    useEffect(() => {
-        const JwtToken = AccountService.infoAppUserByJwtToken();
-        if (!JwtToken) {
-            navigate(-1);
-        }
-    }, []);
+    // useEffect(() => {
+    //     const JwtToken = AccountService.infoAppUserByJwtToken();
+    //     if (!JwtToken) {
+    //         navigate(-1);
+    //     }
+    // }, []);
     useEffect(() => {
         getUserName();
     }, []);
-
+    useEffect(() => {
+        sumProductInCart();
+    }, [userId]);
     useEffect(() => {
         getAppUserId();
         sumProductInCart();
@@ -90,7 +93,8 @@ export function Header() {
 
     const handleSearchInput = (event) => {
         if (event.key === 'Enter' && nameProduct !== "") {
-            navigate(`/searchProduct/${nameProduct}`)
+            navigate(`/searchProduct/${nameProduct}`);
+            setNameProduct("")
         } else if (event.key === 'Enter' && nameProduct === "") {
             Swal.fire({
                 title: "Vui lòng nhập dữ liệu để tìm giày",
@@ -172,6 +176,7 @@ export function Header() {
                         <input
                             onChange={(values) => setNameProduct(values.target.value)}
                             onKeyPress={handleSearchInput}
+                            value={nameProduct}
                             className="input" type="text" placeholder="Nhập tên giày"/>
                     </div>
                     <div className="social-media">
@@ -225,16 +230,25 @@ export function Header() {
                                     <Link to="/login">
                                         <span className="user-info">Đăng nhập</span>
                                     </Link>
-                                ) : (
-                                    <span className="user-info" style={{overflow: "hidden", color: "whitesmoke"}}>
-                      {userId.name}
-                    </span>
-                                )}
+                                ) : null}
 
 
                                 {JwtToken ? (
                                     <>
                                         <div className="user-dropdown-list">
+                                            <Link className="user-dropdown-item" style={{display: "flex"}}>
+                                                <div
+                                                    className="dropdown-text"
+                                                    onClick={() => {
+                                                        confirmLogout();
+                                                    }}
+                                                >
+                                                    <span className="user-info" style={{overflow: "hidden", color: "whitesmoke"}}>
+                                                      {userId.name}
+                                                    </span>
+                                                </div>
+                                            </Link>
+
                                             <Link className="user-dropdown-item" style={{display: "flex"}}>
                                                 <BiLogOutCircle className="me-3 ms-0" size={25}/>
                                                 <div

@@ -27,7 +27,6 @@ export function Cart() {
     const [sumCart, setSumCart] = useState(0);
     const [pay, setPay] = useState("");
     const [totalPrice, setTotalPrice] = useState(0);
-    const [isChecked, setIsChecked] = useState(false);
     const [idProdutChecked, setIdProdutChecked] = useState(0);
     const [voucherUser, setVoucherUser] = useState({})
     const [tempVoucherUser, setTempVoucherUser] = useState("")
@@ -35,8 +34,7 @@ export function Cart() {
     const [totalPricePay, setTotalPricePay] = useState(0)
     const [tempTotalPricePay, setTempTotalPricePay] = useState(0)
     const [priceVoucher, setPriceVoucher] = useState(0)
-    const { callFunctionFromChild } = useContext(MyContext);
-
+    const {callFunctionFromChild} = useContext(MyContext);
 
 
     useEffect(() => {
@@ -49,12 +47,12 @@ export function Cart() {
     useEffect(() => {
         showCartById()
         totalPriceProductInCart()
-    }, [currentPage, id]);
+    }, [currentPage, userId]);
 
 
     const sumTotalPriceById = async () => {
         const data = await OrderProductDetailService.sumTotalPriceById(id);
-        if (data >= 10000000) {
+        if (data >= 10000000 && userId.rankAccount.id === 1) {
             await Swal.fire({
                 title: "Chúc mừng thăng hạng",
                 text: "Chúc mừng bạn đã đạt giá trị đơn hàng lên đến 10.000.000đ, " +
@@ -62,7 +60,7 @@ export function Cart() {
                 icon: "success"
             });
             await OrderProductDetailService.updateRankAccount(userId.id, 2)
-        } else if (data >= 15000000) {
+        } else if (data >= 15000000 && userId.rankAccount.id === 2) {
             await Swal.fire({
                 title: "Chúc mừng thăng hạng",
                 text: "Chúc mừng bạn đã đạt giá trị đơn hàng lên đến 15.000.000đ, " +
@@ -74,41 +72,12 @@ export function Cart() {
     }
     const showCartById = async () => {
         const res = await CartService.showCartById(currentPage, limit, id);
+        console.log(res.data.content)
         setCart(res.data.content);
         setRecords(res.data.size);
         setTotalPages(Math.ceil(res.data.totalElements / 3));
 
     }
-    // const setPriceIfTrue = async (data) => {
-    //     console.log(data);
-    //     data.map((item, index) => {
-    //         if (item.selectPay === true) {
-    //             console.log("++++++++++++++++");
-    //             console.log(index);
-    //             console.log(item);
-    //             // setTotalPrice(totalPrice + (item.priceProduct * item.numberProduct));
-    //         }
-    //     });
-    // }
-
-    // const setPriceIfTrue = (data) => {
-    //     for (let i = 0; i < data.length; i++) {
-    //         if (data[i].selectPay === true) {
-    //             console.log(i)
-    //             if (userId.rankAccount.id === 2) {
-    //                 setTotalPrice(totalPrice + (data[i].priceProduct * data[i].numberProduct));
-    //                 setTotalPricePay((totalPrice + (data[i].priceProduct * data[i].numberProduct)) - ((totalPrice + (data[i].priceProduct * data[i].numberProduct)) * 0.10))
-    //             } else if (userId.rankAccount.id === 3) {
-    //                 setTotalPrice(totalPrice + (data[i].priceProduct * data[i].numberProduct));
-    //                 setTotalPricePay((totalPrice + (data[i].priceProduct * data[i].numberProduct)) - ((totalPrice + (data[i].priceProduct * data[i].numberProduct)) * 0.15))
-    //             } else {
-    //                 setTotalPrice(totalPrice + (data[i].priceProduct * data[i].numberProduct));
-    //                 setTotalPricePay(totalPrice + (data[i].priceProduct * data[i].numberProduct))
-    //             }
-    //             console.log(totalPrice + (data[i].priceProduct * data[i].numberProduct))
-    //         }
-    //     }
-    // }
 
 
     const handlePageClick = (event) => {
@@ -119,7 +88,7 @@ export function Cart() {
         setSumCart(data)
     }
     const totalPriceProductInCart = async () => {
-        const data = await CartService.totalPrice(id);
+        const data = await CartService.totalPrice(userId.id);
         if (userId && userId.rankAccount.id === 2) {
             setTotalPrice(data);
             setTotalPricePay(data - (data * 0.10))
@@ -181,7 +150,7 @@ export function Cart() {
             if (totalPrice === 0) {
                 toast.warning(`Vui lòng chọn sản phẩm rồi sau đó mới áp voucher`)
             } else {
-                if(priceVoucher){
+                if (priceVoucher) {
                     setTotalPricePay(totalPricePay + priceVoucher)
                 }
                 await setVoucherUser(data);
@@ -204,39 +173,54 @@ export function Cart() {
     }
     const vnPayOnclick = async (pricePay) => {
         const link = await CartService.checkVnPay(pricePay);
-        successPay(1)
         window.close();
         window.location.href = link;
+        successPay(1)
+
     }
     const successPay = async (idDetailOrderStatus) => {
-        const values = {
-            idAccount: userId.id,
-            totalPrice: totalPricePay,
-            idDetailOrderStatus: idDetailOrderStatus
-        }
-        const status = await CartService.payProduct(values)
-        if (status === 200) {
-            await Swal.fire({
-                position: "top-center",
-                icon: "success",
-                title: "Thanh toán đơn hàng thành công",
-                showConfirmButton: false,
-                timer: 1700
-            });
-            await sumTotalPriceById()
-            await CartService.deleteAfterPayment(userId.id)
-            if (Object.keys(voucherUser).length > 1) {
-                await VoucherService.setStatusVoucher(voucherUser.id)
+        let flag = true;
+        for (let i = 0; i < cart.length; i++) {
+            const data = await productService.findByAllIdProduct(cart[i].idProduct);
+            console.log(data)
+            if (data.numberProduct === 0) {
+                toast.warning(`Sản phẩm ${data.name} đã có người thanh toán trước đó, vui lòng xoá khỏi giỏ hàng để tiếp tục thanh toán`)
+                flag = false;
             }
-            navigate(`/history/${userId.id}`)
-        } else {
-            await Swal.fire({
-                position: "top-center",
-                icon: "warning",
-                title: "Thanh toán thất bại",
-                showConfirmButton: false,
-                timer: 1900
-            });
+        }
+
+
+        if (flag) {
+            const values = {
+                idAccount: userId.id,
+                totalPrice: totalPricePay,
+                idDetailOrderStatus: idDetailOrderStatus
+            }
+            const status = await CartService.payProduct(values)
+            if (status === 200) {
+                await Swal.fire({
+                    position: "top-center",
+                    icon: "success",
+                    title: "Thanh toán đơn hàng thành công",
+                    showConfirmButton: false,
+                    timer: 1700
+                });
+                await sumTotalPriceById()
+                await CartService.deleteAfterPayment(userId.id)
+                if (Object.keys(voucherUser).length > 1) {
+                    await VoucherService.setStatusVoucher(voucherUser.id)
+                }
+                callFunctionFromChild(Math.random())
+                navigate(`/history/${userId.id}`)
+            } else {
+                await Swal.fire({
+                    position: "top-center",
+                    icon: "warning",
+                    title: "Thanh toán thất bại",
+                    showConfirmButton: false,
+                    timer: 1900
+                });
+            }
         }
     }
 
@@ -250,27 +234,22 @@ export function Cart() {
         //     return
         // }
         const status = await CartService.selectPay(id)
+        console.log(typeof totalPrice + (priceProduct * numberProduct))
+        const pricePay = +(totalPrice + (priceProduct * numberProduct));
+        const pricePayIfSelectPayIsFalse = +(totalPrice - (priceProduct * numberProduct));
         if (status === 200) {
-            if (userId.rankAccount.id === 2) {
-                console.log("Vô hạng vàng")
-                setTotalPrice(totalPrice + (priceProduct * numberProduct));
-                setTotalPricePay((totalPrice + (priceProduct * numberProduct)) - ((totalPrice + (priceProduct * numberProduct)) * 0.10))
-                setTempTotalPricePay((totalPrice + (priceProduct * numberProduct)) - ((totalPrice + (priceProduct * numberProduct)) * 0.10))
-            } else if (userId.rankAccount.id === 3) {
-                console.log("Vô hạng bk")
-                setTotalPrice(totalPrice + (priceProduct * numberProduct));
-                setTotalPricePay((totalPrice + (priceProduct * numberProduct)) - ((totalPrice + (priceProduct * numberProduct)) * 0.15))
-                setTempTotalPricePay((totalPrice + (priceProduct * numberProduct)) - ((totalPrice + (priceProduct * numberProduct)) * 0.10))
-            } else {
-                console.log("k vô")
-                setTotalPrice(totalPrice + (priceProduct * numberProduct));
-                setTotalPricePay(totalPrice + (priceProduct * numberProduct))
-                setTempTotalPricePay(totalPrice + (priceProduct * numberProduct))
-            }
+
+            setTotalPrice(totalPrice + (priceProduct * numberProduct));
+            setTotalPricePay(totalPrice + (priceProduct * numberProduct))
+
+
+            console.log(typeof pricePay)
+            console.log(userId.rankAccount.id === 2 ? "Vô hạng vàng" : userId.rankAccount.id === 3 ? "Vô hạng bk" : "k vô");
+            setTotalPrice(pricePay);
+            setTotalPricePay(pricePay - (pricePay * (userId.rankAccount.id === 2 ? 0.10 : userId.rankAccount.id === 3 ? 0.15 : 0)));
         } else if (status === 201) {
-            setTotalPrice(totalPrice - (priceProduct * numberProduct));
-            setTotalPricePay(totalPrice - (priceProduct * numberProduct))
-            setTempTotalPricePay(totalPrice - (priceProduct * numberProduct))
+            setTotalPrice(pricePayIfSelectPayIsFalse);
+            setTotalPricePay(pricePayIfSelectPayIsFalse - (pricePayIfSelectPayIsFalse * (userId.rankAccount.id === 2 ? 0.10 : userId.rankAccount.id === 3 ? 0.15 : 0)));
         }
     }
     const deleteById = async (id, name) => {
@@ -334,14 +313,14 @@ export function Cart() {
                                                                 của
                                                                 bạn</p>
                                                         </div>
-                                                        <div>
-                                                            <p className="mb-0">
-                                                                <span className="text-muted">Sắp xếp theo:</span>{" "}
-                                                                <a href="#!" className="text-body">
-                                                                    giá <i className="fas fa-angle-down mt-1"/>
-                                                                </a>
-                                                            </p>
-                                                        </div>
+                                                        {/*<div>*/}
+                                                        {/*    <p className="mb-0">*/}
+                                                        {/*        <span className="text-muted">Sắp xếp theo:</span>{" "}*/}
+                                                        {/*        <a href="#!" className="text-body">*/}
+                                                        {/*            giá <i className="fas fa-angle-down mt-1"/>*/}
+                                                        {/*        </a>*/}
+                                                        {/*    </p>*/}
+                                                        {/*</div>*/}
                                                     </div>
                                                     {cart.map(carts => {
                                                         return (
